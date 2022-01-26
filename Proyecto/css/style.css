@@ -1,0 +1,28 @@
+body{
+  font-family: 'Poppins', sans-serif;
+  background-image: url(/images/wine.png);
+  background-size: cover;
+}
+
+.btn{
+  font-family: 'Oswald', sans-serif;
+  font-weight: 200;
+}
+
+.bg-logo{
+  background-color: #FF1616;
+}
+
+li:hover{
+  font-size: 1.1rem;
+}
+
+.active{
+  color:white!important;
+  
+} 
+
+
+.img-size{
+  width: 150px;
+}
