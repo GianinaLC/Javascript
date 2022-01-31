@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&family=Poppins:wght@100;300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>CAVA SIN FIN</title>
-    <script src="./js/script.js"></script>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarTogglerDemo02">
+        <div class="collapse navbar-collapse justify-content-around" id="navbarTogglerDemo02">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="./index.html">Vinos</a>
@@ -41,117 +41,140 @@
             </ul>
         </div>
     </div>
-    
+    <div class="d-grid justify-content-md-end">
+        <button class="btn btn-dark">
+            <p class="mb-0 cart">
+                <a href="./pages/carrito.html"><i class="fas fa-shopping-cart"></i><span class="p-1">0</span></a>
+            </p>
+        </button>
+    </div>
 
     <article class="container-fluid">
         <div class="row g-3 m-2">
             <div class="col-sm-6 col-md-3">
                 <div class="card h-100">
-                    <img src="./images/tintos/AlamosMalbec.png" class="img-size mx-auto img-fluid" alt="Alamos Malbec">
+                    <img src="./images/tintos/AlamosMalbec.png" class="img-size mx-auto mt-2 img-fluid" alt="Alamos Malbec">
                     <div class="card-body text-center">
                         <h5 class="card-title fs-6">Alamos</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Malbec</h6>
-                        <p class="card-text">This is a longer card .</p>
-                        <a href="#" class="btn btn-dark">COMPRAR</a>
+                        <p class="card-text">$ 700</p>
+                        <a class="btn btn-dark add-cart">COMPRAR</a>
                     </div>
               </div>
             </div>
 
             <div class="col-sm-6 col-md-3">
                 <div class="card h-100">
-                    <img src="./images/tintos/AndelunaBlend.png" class="img-size mx-auto img-fluid" alt="Andeluna Blend">
+                    <img src="./images/tintos/AndelunaBlend.png" class="img-size mx-auto mt-2 img-fluid" alt="Andeluna Blend">
                     <div class="card-body text-center">
                         <h5 class="card-title fs-6">Andeluna</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Blend</h6>
-                        <p class="card-text">This is a longer card.</p>
-                        <a href="#" class="btn btn-dark">COMPRAR</a>
+                        <p class="card-text">$ 950.</p>
+                        <a class="btn btn-dark add-cart">COMPRAR</a>
                     </div>
               </div>
             </div>
 
             <div class="col-sm-6 col-md-3">
                 <div class="card h-100">
-                    <img src="./images/tintos/BianchiMalbec.png" class="img-size mx-auto img-fluid" alt="Bianchi Malbec">
+                    <img src="./images/tintos/BianchiMalbec.png" class="img-size mx-auto mt-2 img-fluid" alt="Bianchi Malbec">
                     <div class="card-body text-center">
                         <h5 class="card-title fs-6">Bianchi</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Malbec</h6>
-                        <p class="card-text">This is a longer card.</p>
-                        <a href="#" class="btn btn-dark">COMPRAR</a>
+                        <p class="card-text">$ 1100.</p>
+                        <a class="btn btn-dark add-cart">COMPRAR</a>
                     </div>
                 </div>
             </div>
 
             <div class="col-sm-6 col-md-3">
               <div class="card h-100">
-                    <img src="./images/tintos/BianchiCabS.png" class="img-size mx-auto img-fluid" alt="Bianchi Cabernet Sauvignon.">
+                    <img src="./images/tintos/BianchiCabS.png" class="img-size mx-auto mt-2 img-fluid" alt="Bianchi Cabernet Sauvignon.">
                     <div class="card-body text-center">
                         <h5 class="card-title fs-6">Bianchi</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Cabernet Sauvignon</h6>
-                        <p class="card-text">This is a longer card.</p>
-                        <a href="#" class="btn btn-dark">COMPRAR</a>
+                        <p class="card-text">$ 850</p>
+                        <a class="btn btn-dark add-cart">COMPRAR</a>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-3">
                 <div class="card h-100">
-                    <img src="./images/tintos/CafayateCabS.png" class="img-size mx-auto img-fluid" alt="Cafayate Cabernet Sauvignon">
+                    <img src="./images/tintos/CafayateCabS.png" class="img-size mx-auto mt-2 img-fluid" alt="Cafayate Cabernet Sauvignon">
                     <div class="card-body text-center">
                         <h5 class="card-title fs-6">Cafayate</h5>
                         <h6 class="card-subtitle mb-2 text-muted"> Cabernet Sauvignon</h6>
-                        <p class="card-text">This is a longer card.</p>
-                        <a href="#" class="btn btn-dark">COMPRAR</a>
+                        <p class="card-text">$ 600</p>
+                        <a class="btn btn-dark add-cart">COMPRAR</a>
                     </div>
                 </div>
             </div>
             
             <div class="col-sm-6 col-md-3">
                 <div class="card h-100">
-                    <img src="./images/tintos/CafayateMalbec.png" class="img-size mx-auto img-fluid" alt="CafayateMalbec">
+                    <img src="./images/tintos/CafayateMalbec.png" class="img-size mx-auto mt-2 img-fluid" alt="CafayateMalbec">
                     <div class="card-body text-center">
                         <h5 class="card-title fs-6">Cafayate</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Malbec</h6>
-                        <p class="card-text">This is a longer card .</p>
-                        <a href="#" class="btn btn-dark">COMPRAR</a>
+                        <p class="card-text">$ 750 .</p>
+                        <a class="btn btn-dark add-cart">COMPRAR</a>
                     </div>
                 </div>
             </div>
 
             <div class="col-sm-6 col-md-3">
                 <div class="card h-100">
-                    <img src="./images/tintos/CasilleroDelDiablo.png" class="img-size mx-auto img-fluid" alt="Casillero Del Diablo">
+                    <img src="./images/tintos/CasilleroDelDiablo.png" class="img-size mx-auto mt-2 img-fluid" alt="Casillero Del Diablo">
                     <div class="card-body text-center">
                         <h5 class="card-title fs-6">Casillero Del Diablo</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Malbec</h6>
-                        <p class="card-text">This is a longer card .</p>
-                        <a href="#" class="btn btn-dark">COMPRAR</a>
+                        <p class="card-text">$ 1200.</p>
+                        <a class="btn btn-dark add-cart">COMPRAR</a>
                     </div>
                 </div>
             </div>
         
             <div class="col-sm-6 col-md-3">
                 <div class="card h-100">
-                    <img src="./images/tintos/CasilleroDelDiabloBlend.png" class="img-size mx-auto img-fluid" alt="Casillero Del Diablo Blend">
+                    <img src="./images/tintos/CasilleroDelDiabloBlend.png" class="img-size mx-auto mt-2 img-fluid" alt="Casillero Del Diablo Blend">
                     <div class="card-body text-center">
                         <h5 class="card-title fs-6">Casillero Del Diablo</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Blend</h6>
-                        <p class="card-text">This is a longer card .</p>
-                        <a href="#" class="btn btn-dark">COMPRAR</a>
+                        <p class="card-text">$ 1000.</p>
+                        <a class="btn btn-dark add-cart">COMPRAR</a>
                     </div>
                 </div>
             </div>
         </div>
     </article>
 
-    <footer>
-        <div>
-            <div class="p-2 bd-highlight">Contacto</div>
-            <div class="p-2 bd-highlight">Nosotros</div>
+    <footer class=" container-fluid bg-dark bg-gradient row p-5">
+        <div class="col-12 col-sm-6">
+            <div class="p-2 text-white">Nosotros</div>
+            <div class="p-2 text-white">Terminos y condiciones</div>
         </div>
+
+        <form class="container col-12 col-sm-6 text-white ">
+            <div>
+                <p>Contacto</p>
+                <p>Si tienes alguna consulta, no dudes en contactarte con nosotros</p>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Deja un comentario</label>
+				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+                <button type="submit" class="btn btn-dark" id="btnEnviar">Enviar</button>
+                <button type="reset" value="reset" class="btn btn-dark">Borrar</button>
+
+        </form> 
     </footer>
 
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="./js/script.js"></script>
 </body>
 </html>
