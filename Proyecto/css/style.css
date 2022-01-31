@@ -1,6 +1,6 @@
 body{
   font-family: 'Poppins', sans-serif;
-  background-image: url(/images/wine.png);
+  /* background-image: url(../images/wine.png); */
   background-size: cover;
 }
 
@@ -19,10 +19,14 @@ li:hover{
 
 .active{
   color:white!important;
-  
 } 
 
+a{
+  text-decoration: none;
+  color: white;
+}
 
 .img-size{
   width: 150px;
 }
+
