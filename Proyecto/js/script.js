@@ -70,7 +70,7 @@ let bebidas = [
 
 for (let i = 0; i < carts.length; i++){
     carts[i].addEventListener('click', () =>{
-        cartNumbers(bebidas[i]);
+        numerosCarts(bebidas[i]);
         totalCost(bebidas[i]);
         
     })
@@ -79,24 +79,24 @@ for (let i = 0; i < carts.length; i++){
 //la sgte funcion es para que no se borre el numero cargado de productos en el boton carrito
 //verifica primero si en el localstorage hay productos guardados 
 
-function onLoadCartNumbers(){
-    productNumbers = localStorage.getItem('cartNumbers');
-    if (productNumbers){
-        document.querySelector('.cart span').textContent = productNumbers;
+function cartNumberMenu(){
+    productoNumeros = localStorage.getItem('numerosCarts');
+    if (productoNumeros){
+        document.querySelector('.cart span').textContent = productoNumeros;
     }
 }
 
 //para saber cuantos elementos estoy agregando a la cart
-function cartNumbers(producto){
+function numerosCarts(producto){
     /* console.log('producto elegido', producto); */
-    let productNumbers = localStorage.getItem('cartNumbers');
-    productNumbers = parseInt(productNumbers);
+    let productoNumeros = localStorage.getItem('numerosCarts');
+    productoNumeros = parseInt(productoNumeros);
 
-    if(productNumbers){
-        localStorage.setItem('cartNumbers', productNumbers + 1);
-        document.querySelector('.cart span').textContent = productNumbers + 1;
+    if(productoNumeros){
+        localStorage.setItem('numerosCarts', productoNumeros + 1);
+        document.querySelector('.cart span').textContent = productoNumeros + 1;
     }else{
-        localStorage.setItem('cartNumbers', 1);
+        localStorage.setItem('numerosCarts', 1);
         document.querySelector('.cart span').textContent = 1;
     }
 
@@ -143,13 +143,12 @@ function mostrarCart(){
     let cartCost = localStorage.getItem('costoTotal');
 
 
-    console.log(cartItems);
     if (cartItems && productoContainer){
         productoContainer.innerHTML = '';
         Object.values(cartItems).map(item =>{
             productoContainer.innerHTML += `
             <div class="d-flex flex-row justify-content-around text-center">
-                <div class="p-2 bd-highlight">
+                <div class="py-2 bd-highlight">
                     <span>${item.nombre}</span>
                 </div>
                 <div class="py-2 bd-highlight ">${item.variedad}</div>
@@ -160,19 +159,118 @@ function mostrarCart(){
              `
         });
         productoContainer.innerHTML += `
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end my-3">
             <h4 class="px-4">Costo total</h4>
             <h4 class="px-4">$${cartCost}</h4>
         </div> `;
+
+        productoContainer.innerHTML += `
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-dark" id="btnRealizarCompra">Realizar compra</button>
+        </div>`
+        let btnRealizarCompra = document.getElementById('btnRealizarCompra');
+
+        btnRealizarCompra.addEventListener('click', ()=>{
+            productos.classList.add('oculta');
+            productos.classList.remove('visible');
+            realizarCompra.classList.add('visible');
+            realizarCompra.classList.remove('oculta');
+        })
+        mostrarCompra();
+        configFinalizarCompra();
     }
 
 }
 
-/* <img src=./images/tintos/${item.name}.png"> ver tema para agregar fotos o no de los productos */
-onLoadCartNumbers();
+
+cartNumberMenu();
 mostrarCart();
 
-let btnEnviar = document.addEventListener('submit',(e)=>{
-    e.preventDefault();
-    console.log('Se envio el comentario')
-});
+
+//seguir con la compra
+let btnRealizarCompra = document.getElementById('btnRealizarCompra');
+let realizarCompra = document.querySelector('.realizarCompra');
+let productos = document.querySelector('.productos');
+
+
+////// form realizar compra --oculta al principio--
+function mostrarCompra(){
+    let cartCost = localStorage.getItem('costoTotal');
+    let subtotal = document.getElementById('subtotal');
+    let btnCheckEnvio1 = document.getElementById('btnradio1');
+    let btnCheckEnvio2 = document.getElementById('btnradio2');
+    let totalCompra = document.getElementById('totalCompra');
+    let envio = 300;
+    let costoFinal = parseInt(cartCost) + envio;
+    let datosEnvios = document.querySelector('.datosEnvio');
+    
+    subtotal.innerHTML += `
+        <p class="">
+            $${cartCost}
+        </p>`
+
+        //carro + envio
+    btnCheckEnvio1.addEventListener('click',()=>{
+        datosEnvios.classList.remove('oculta');
+        totalCompra.innerHTML += `
+        <p class="">
+            $${costoFinal}
+        </p>`
+    })
+
+    btnCheckEnvio2.addEventListener('click',()=>{
+        datosEnvios.classList.add('oculta');
+
+        totalCompra.innerHTML += `
+        <p class="">
+            $${cartCost}
+        </p>`
+    })
+}
+
+///////////direcion para el envio del pedido
+let direcciones;
+
+function guardarDireccion() {
+    class Direccion {
+        constructor(nombreCalle,numCasa,localidad){
+            this.calle = nombreCalle;
+            this.casa = numCasa;
+            this.localidad = localidad;
+        }
+    }
+
+    let direccion = document.getElementById('direccion').value;
+    let numeroCasa = document.getElementById('numeroCasa').value;
+    let localidad = document.getElementById('localidad').value;
+
+    direcciones = (new Direccion(direccion,numeroCasa,localidad));
+    agregar();
+}
+
+const direccionesGuardadas = [];
+function agregar(){
+    direccionesGuardadas.push(direcciones)
+}
+
+function configFinalizarCompra(){
+    //finaliza la compra, se oculta y se agradece por la compra
+    let carritoMenu = document.querySelector('.carritoMenu')
+    let finalizarCompra = document.getElementById('finalizarCompra');
+    let finCompra = document.querySelector('.finCompra');
+
+    finalizarCompra.addEventListener('click', (e)=>{
+        e.preventDefault();
+        guardarDireccion();
+        console.log(direcciones)
+        carritoMenu.classList.add('oculta');
+        realizarCompra.classList.remove('visible');
+        realizarCompra.classList.add('oculta');
+        finCompra.classList.add('visible');
+
+        finCompra.innerHTML += `
+            <h3 class=" finCompraStyle">
+                Gracias por su compra
+            </h3>`
+    });
+}

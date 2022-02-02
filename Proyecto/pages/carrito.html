@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    <!-- navbar-->
     <div class="container-fluid text-center bg-logo">
         <a class="navbar-brand text-center" href="../index.html"><img src="../images/logo5.png" class="img-fluid" width="200px"></a>
     </div>
@@ -41,6 +42,7 @@
             </ul>
         </div>
     </div>
+    <!-- boton carrito -->
     <div class="d-grid justify-content-md-end">
         <button class="btn btn-dark">
             <p class="mb-0 cart">
@@ -49,19 +51,85 @@
         </button>
     </div>
     
-    <main>
-        <h2 class="container py-5">Tu carrito de compras</h2>
-        <article class="container">
-            <div>
-                <div class="d-flex flex-row bd-highlight mb-3 justify-content-around ">
+
+    <!----------------------comienzo de la pagina-------------->
+    <main class="container">
+        <h2 class="py-3 fs-3 m-2">Tu carrito de compras</h2>
+        <div class="finCompra">
+
+        </div>
+        
+        <article>
+            <!-- -------parte oculta, relizacion del pago-------- -->
+            <div class="p-2 realizarCompra oculta" >
+                <form class="mb-5 p-3 row justify-content-center col-12 col-sm-8 mx-auto bg-pago">
+                    <div class="row col-12">
+                        <div class="mb-3 col-12 col-sm-6">
+                            <label class="form-label">Subtotal</label>
+                        </div>
+                        <div class="mb-3 col-12 col-sm-6">
+                            <p class="shadow px-2" id="subtotal"> </p>
+                        </div>
+                    </div>
+                    <!--  para hacer mas adelante 
+                        <div class="row col-12">
+                        <div class="mb-3 col-12 col-sm-6">
+                            <label for="exampleDataList" class="form-label">Como desea abonar</label>
+                        </div>
+                        <div class="mb-3 col-12 col-sm-6">
+                            <input class="form-control" list="datalistOptions" placeholder="Modo de pago">
+                            <datalist id="datalistOptions">
+                                <option value="Efectivo">
+                                <option value="Tarjeta">
+                            </datalist>
+                        </div>
+                    </div>-->
+                    
+                    <div class="row col-12">
+                        <div class="mb-3 col-12 col-sm-6 ">
+                            <label class="form-label">Envio ($ 300)</label>
+                            
+                        </div>
+                        <div class="btn-group mb-3 col col-sm-6" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                            <label class="btn btn-outline-secondary btn-sm btnCheckEnvio1" for="btnradio1">Si</label>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                            <label class="btn btn-outline-secondary btn-sm btnCheckEnvio2" for="btnradio2">No</label>
+                        </div>
+                        <div class="mb-3 datosEnvio oculta col-12 col-sm-12">
+                            <label class="form-label">Direccion</label>
+                            <input class="form-control mb-3" id="direccion">
+                            <label class="form-label">Numero</label>
+                            <input class="form-control mb-3" id="numeroCasa">
+                            <label for="exampleInputPassword1" class="form-label">Localidad</label>
+                            <input class="form-control mb-3" id="localidad">
+                        </div>  
+                    </div>
+
+                    <div class="row col-8">
+                        <div class="mb-3 col-12 col-sm-6">
+                            <label  class="form-label text-uppercase">Total de la compra</label>
+                        </div>
+                        <div class="mb-3 col-12 col-sm-6">
+                            <p class="shadow px-2 fs-4" id="totalCompra"> </p>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="finalizarCompra">Finalizar compra</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ----------------carrito -->
+            <div class="carritoMenu"> 
+                <div class="d-flex flex-row bd-highlight justify-content-around ">
                     <div class="py-2 bd-highlight"><h5>Productos</h5></div>
                     <div class="py-2 bd-highlight"><h5>Variedad</h5></div>
                     <div class="py-2 bd-highlight"><h5>Precio</h5></div>
                     <div class="py-2 bd-highlight"><h5>Cantidad</h5></div>
                     <div class="py-2 bd-highlight"><h5>Total</h5></div>
-                  </div>
-                <div class="productos d-flex flex-column bd-highlight mb-3 ">
+                </div>
 
+                <div class="productos visible d-flex flex-column bd-highlight mb-3 ">
+                    <!--  lista productos seleccionados del carrito -->
                 </div>
             </div>
         </article>

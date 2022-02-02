@@ -30,3 +30,27 @@ a{
   width: 150px;
 }
 
+/*--------cuadro realizar compra*/
+.oculta{
+  display: none;
+}
+.visible{
+  display: block;
+}
+
+.bg-pago{
+  background-color: darkgray;
+  box-shadow: rgb(202, 192, 158) 2px 1px 15px 2px;
+}
+
+.realizarCompra {
+  position: absolute;
+  
+}
+
+.finCompraStyle{
+  background-color: burlywood;
+  padding: 10px;
+  text-align: center;
+  margin: 10px;
+}
