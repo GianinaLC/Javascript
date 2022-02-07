@@ -107,17 +107,17 @@ function setItems(producto){
     let cartItems = localStorage.getItem('ProductosCarrito');
     cartItems = JSON.parse(cartItems);
     if(cartItems != null){
-        if(cartItems[producto.nombre] == undefined){
+        if(cartItems[producto.id] == undefined){
             cartItems = {
                 ...cartItems,
-                [producto.nombre]:producto
+                [producto.id]:producto
             }
         }
-        cartItems[producto.nombre].inCart += 1;
+        cartItems[producto.id].inCart += 1;
     } else{
         producto.inCart = 1;
         cartItems = {
-            [producto.nombre]:producto
+            [producto.id]:producto
         }
     }
     
@@ -136,18 +136,29 @@ function totalCost(producto){
 
 }
 
+
+
 function mostrarCart(){
     let cartItems = localStorage.getItem("ProductosCarrito");
     cartItems = JSON.parse(cartItems);
     let productoContainer = document.querySelector('.productos');
     let cartCost = localStorage.getItem('costoTotal');
+    let cartEmpty = document.querySelector('.cartEmpty');
+    let productoTitle = document.querySelector('.productoTitle');
 
 
-    if (cartItems && productoContainer){
+    if (cartItems && productoContainer && productoTitle){
+        productoTitle.innerHTML += 
+        `   <div class="py-2 bd-highlight"><h5 class="fs-6">Productos</h5></div>
+            <div class="py-2 bd-highlight"><h5 class="fs-6">Variedad</h5></div>
+            <div class="py-2 bd-highlight"><h5 class="fs-6">Precio</h5></div>
+            <div class="py-2 bd-highlight"><h5 class="fs-6">Cantidad</h5></div>
+            <div class="py-2 bd-highlight"><h5 class="fs-6">Total</h5></div> `
+
         productoContainer.innerHTML = '';
         Object.values(cartItems).map(item =>{
             productoContainer.innerHTML += `
-            <div class="d-flex flex-row justify-content-around text-center">
+            <div class="d-flex flex-row justify-content-around ">
                 <div class="py-2 bd-highlight">
                     <span>${item.nombre}</span>
                 </div>
@@ -159,26 +170,31 @@ function mostrarCart(){
              `
         });
         productoContainer.innerHTML += `
-        <div class="d-flex justify-content-end my-3">
+        <div class="d-flex justify-content-end m-3">
             <h4 class="px-4">Costo total</h4>
             <h4 class="px-4">$${cartCost}</h4>
         </div> `;
 
         productoContainer.innerHTML += `
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-center mb-3 ">
             <button type="button" class="btn btn-dark" id="btnRealizarCompra">Realizar compra</button>
         </div>`
         let btnRealizarCompra = document.getElementById('btnRealizarCompra');
 
         btnRealizarCompra.addEventListener('click', ()=>{
             productos.classList.add('oculta');
+            productos.classList.add('opacity')
             productos.classList.remove('visible');
             realizarCompra.classList.add('visible');
             realizarCompra.classList.remove('oculta');
         })
         mostrarCompra();
         configFinalizarCompra();
-    }
+
+    }else if(cartEmpty){
+        cartEmpty.innerHTML +=
+        `<h3>El carrito está vacío</h3>`
+    };
 
 }
 
@@ -194,6 +210,7 @@ let productos = document.querySelector('.productos');
 
 
 ////// form realizar compra --oculta al principio--
+
 function mostrarCompra(){
     let cartCost = localStorage.getItem('costoTotal');
     let subtotal = document.getElementById('subtotal');
@@ -210,22 +227,28 @@ function mostrarCompra(){
         </p>`
 
         //carro + envio
-    btnCheckEnvio1.addEventListener('click',()=>{
+    /* btnCheckEnvio1.addEventListener('click',()=>{
         datosEnvios.classList.remove('oculta');
         totalCompra.innerHTML += `
         <p class="">
             $${costoFinal}
         </p>`
-    })
+    }) */
 
-    btnCheckEnvio2.addEventListener('click',()=>{
+    if(btnCheckEnvio2){
         datosEnvios.classList.add('oculta');
-
         totalCompra.innerHTML += `
         <p class="">
             $${cartCost}
         </p>`
-    })
+    }
+
+    if(btnCheckEnvio1){
+        btnCheckEnvio1.addEventListener('click',()=>{
+            datosEnvios.classList.remove('oculta');
+            totalCompra.textContent =`$${costoFinal}`;
+        })}
+    
 }
 
 ///////////direcion para el envio del pedido
@@ -253,6 +276,11 @@ function agregar(){
     direccionesGuardadas.push(direcciones)
 }
 
+/* function vaciarCarrito() {
+    cartItems = '';
+    numerosCarts();
+} */
+
 function configFinalizarCompra(){
     //finaliza la compra, se oculta y se agradece por la compra
     let carritoMenu = document.querySelector('.carritoMenu')
@@ -262,7 +290,9 @@ function configFinalizarCompra(){
     finalizarCompra.addEventListener('click', (e)=>{
         e.preventDefault();
         guardarDireccion();
+       /*  vaciarCarrito(); */
         console.log(direcciones)
+        carritoMenu.classList.remove('visible');
         carritoMenu.classList.add('oculta');
         realizarCompra.classList.remove('visible');
         realizarCompra.classList.add('oculta');
@@ -274,3 +304,16 @@ function configFinalizarCompra(){
             </h3>`
     });
 }
+
+//arreglos que quedan por hacer e investigar .. +(hecho)
+//arreglar el click en botones de productos, que algunos se repiten, o cuando le da la locura . +
+// modificar el check del boton para que el active sea el boton No. +
+//agregar productos en las otras paginas, de momento solo el index y carrito tienen funcionalidad
+//resetear carrito
+//cambiar de precio segun lo indicado pq si switcheo se me imprimen todos . +-,falta que se pueda volver cuantas veces quiera
+
+
+//Forma explicita jquery
+/* $( document ).ready(function() {
+    console.log('El DOM esta listo');
+}); */
