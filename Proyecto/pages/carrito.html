@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarTogglerDemo02">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="../index.html">Vinos</a>
+                    <a class="nav-link" aria-current="page" href="../index.html">Vinos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./licores.html">Licores</a>
@@ -43,7 +43,7 @@
         </div>
     </div>
     <!-- boton carrito -->
-    <div class="d-grid justify-content-md-end">
+    <div class="cartPosition">
         <button class="btn btn-dark">
             <p class="mb-0 cart">
                 <a href="./carrito.html"><i class="fas fa-shopping-cart"></i><span class="p-1">0</span></a>
@@ -53,16 +53,16 @@
     
 
     <!----------------------comienzo de la pagina-------------->
-    <main class="container">
+    <main class="container-fluid">
         <h2 class="py-3 fs-3 m-2">Tu carrito de compras</h2>
-        <div class="finCompra">
-
+        <div class="finCompra mb-5">
+            <!-- graciasporsucompra -->
         </div>
         
-        <article>
+        <article class="container drawCart carritoMenu visible">
             <!-- -------parte oculta, relizacion del pago-------- -->
-            <div class="p-2 realizarCompra oculta" >
-                <form class="mb-5 p-3 row justify-content-center col-12 col-sm-8 mx-auto bg-pago">
+            <div class="p-5 realizarCompra oculta col-12 col-md-8 ">
+                <form class="mb-5 p-3 row justify-content-center col-12 col-sm-8 bg-pago m-0">
                     <div class="row col-12">
                         <div class="mb-3 col-12 col-sm-6">
                             <label class="form-label">Subtotal</label>
@@ -85,18 +85,18 @@
                         </div>
                     </div>-->
                     
-                    <div class="row col-12">
-                        <div class="mb-3 col-12 col-sm-6 ">
+                    <div class="row col-12 p-2">
+                        <div class="mb-3 col-12 col-md-8 ">
                             <label class="form-label">Envio ($ 300)</label>
                             
                         </div>
-                        <div class="btn-group mb-3 col col-sm-6" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                        <div class="btn-group mb-3 col col-sm-4" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" >
                             <label class="btn btn-outline-secondary btn-sm btnCheckEnvio1" for="btnradio1">Si</label>
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked>
                             <label class="btn btn-outline-secondary btn-sm btnCheckEnvio2" for="btnradio2">No</label>
                         </div>
-                        <div class="mb-3 datosEnvio oculta col-12 col-sm-12">
+                        <div class="mb-3 datosEnvio oculta col-12 ">
                             <label class="form-label">Direccion</label>
                             <input class="form-control mb-3" id="direccion">
                             <label class="form-label">Numero</label>
@@ -113,22 +113,21 @@
                         <div class="mb-3 col-12 col-sm-6">
                             <p class="shadow px-2 fs-4" id="totalCompra"> </p>
                         </div>
-                        <button type="submit" class="btn btn-primary" id="finalizarCompra">Finalizar compra</button>
+                        <button type="submit" class="btn btn-dark" id="finalizarCompra">Finalizar compra</button>
                     </div>
                 </form>
             </div>
 
             <!-- ----------------carrito -->
-            <div class="carritoMenu"> 
-                <div class="d-flex flex-row bd-highlight justify-content-around ">
-                    <div class="py-2 bd-highlight"><h5>Productos</h5></div>
-                    <div class="py-2 bd-highlight"><h5>Variedad</h5></div>
-                    <div class="py-2 bd-highlight"><h5>Precio</h5></div>
-                    <div class="py-2 bd-highlight"><h5>Cantidad</h5></div>
-                    <div class="py-2 bd-highlight"><h5>Total</h5></div>
+            <div class="d-flex flex-column "> 
+                <div class="cartEmpty">
+                    <!-- <h3>El carrito está vacío</h3> -->
+                </div>
+                <div class="d-flex flex-row bd-highlight justify-content-around productoTitle visible text-uppercase bg-secondary text-white bg-opacity-75">
+                    <!-- h5 titulo detalles del carrito -->
                 </div>
 
-                <div class="productos visible d-flex flex-column bd-highlight mb-3 ">
+                <div class="productos visible d-flex flex-column bd-highlight mb-5 bg-light">
                     <!--  lista productos seleccionados del carrito -->
                 </div>
             </div>
@@ -136,32 +135,54 @@
     </main>
     
 
-    <footer class=" container-fluid bg-dark bg-gradient row p-5">
-        <div class="col-12 col-sm-6">
-            <div class="p-2 text-white">Nosotros</div>
-            <div class="p-2 text-white">Terminos y condiciones</div>
+    <footer class=" container-fluid bg-dark bg-gradient p-5 pb-0 m-0 text-white">
+        <div class="row ">
+            <div class="col-12 col-sm-6">
+                <div class="p-2">
+                    <p class="pb-2 m-0">Nosotros</p>
+                    <p class="pb-2 m-0">Términos y condiciones</p>
+                    <p class="pb-2 m-0">Politicas de privacidad</p>
+                </div>
+                <div class="p-2 col-12 col-sm-6  ratio ratio-16x9">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3350.321526230532!2d-68.8443298798405!3d-32.88966632445397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1644193956824!5m2!1ses-419!2sar" width="400" height="200" style="border:0;" allowfullscreen="" loading="lazy" class="p-2"></iframe>
+                </div>
+            </div>
+
+            <form class="container col-12 col-sm-6 ">
+                <div class="p-2">
+                    <p class="pb-2 m-0">Contacto</p>
+                    <p class="pb-2 m-0"><i class=" fab fa-whatsapp"></i> +54 261 3344556</p>
+                    <p class="pb-2 m-0"><i class=" far fa-compass"></i> Ciudad de Mendoza</p>
+                </div>
+                <div class="m-0 p-2">
+                    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                </div>
+                <div class="m-0 p-2">
+                    <label for="exampleFormControlTextarea1" class="form-label">Deja un comentario</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <div class="p-2">
+                    <button type="submit" class="btn btn-dark" id="btnEnviar">Enviar</button>
+                    <button type="reset" value="reset" class="btn btn-dark">Borrar</button>
+                </div>
+            </form> 
         </div>
 
-        <form class="container col-12 col-sm-6 text-white ">
-            <div>
-                <p>Contacto</p>
-                <p>Si tienes alguna consulta, no dudes en contactarte con nosotros</p>
+        <div class="container">
+            <div class="d-flex flex-column flex-wrap align-items-center fs-2 mt-5">
+                <div>
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div>
+                    <p class="fs-6">Copyright 2022 - DesingByGLC</p>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Deja un comentario</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-                <button type="submit" class="btn btn-dark" id="btnEnviar">Enviar</button>
-                <button type="reset" value="reset" class="btn btn-dark">Borrar</button>
-
-        </form> 
+        </div>
     </footer>
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="../js/script.js"></script>
 </body>
