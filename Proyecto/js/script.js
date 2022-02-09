@@ -1,6 +1,3 @@
-let carts = document.querySelectorAll('.add-cart');
-//los botones comprar, mediante la clase generan el evento
-
 let bebidas = [
     {
         nombre: "Alamos",
@@ -67,6 +64,9 @@ let bebidas = [
         inCart: 0,
     }, 
 ];
+
+let carts = document.querySelectorAll('.add-cart');
+//los botones comprar, mediante la clase generan el evento
 
 for (let i = 0; i < carts.length; i++){
     carts[i].addEventListener('click', () =>{
@@ -136,8 +136,6 @@ function totalCost(producto){
 
 }
 
-
-
 function mostrarCart(){
     let cartItems = localStorage.getItem("ProductosCarrito");
     cartItems = JSON.parse(cartItems);
@@ -193,15 +191,14 @@ function mostrarCart(){
 
     }else if(cartEmpty){
         cartEmpty.innerHTML +=
-        `<h3>El carrito está vacío</h3>`
+        `<h3 class='text-center'>Tu carrito está vacío</h3>
+        <img src='../images/carritoVacio.png' class='img-fluid rounded mx-auto d-block' width='300px'>`
     };
 
 }
 
-
 cartNumberMenu();
 mostrarCart();
-
 
 //seguir con la compra
 let btnRealizarCompra = document.getElementById('btnRealizarCompra');
@@ -226,14 +223,6 @@ function mostrarCompra(){
             $${cartCost}
         </p>`
 
-        //carro + envio
-    /* btnCheckEnvio1.addEventListener('click',()=>{
-        datosEnvios.classList.remove('oculta');
-        totalCompra.innerHTML += `
-        <p class="">
-            $${costoFinal}
-        </p>`
-    }) */
 
     if(btnCheckEnvio2){
         datosEnvios.classList.add('oculta');
@@ -276,11 +265,7 @@ function agregar(){
     direccionesGuardadas.push(direcciones)
 }
 
-/* function vaciarCarrito() {
-    cartItems = '';
-    numerosCarts();
-} */
-
+/* 
 function configFinalizarCompra(){
     //finaliza la compra, se oculta y se agradece por la compra
     let carritoMenu = document.querySelector('.carritoMenu')
@@ -290,7 +275,6 @@ function configFinalizarCompra(){
     finalizarCompra.addEventListener('click', (e)=>{
         e.preventDefault();
         guardarDireccion();
-       /*  vaciarCarrito(); */
         console.log(direcciones)
         carritoMenu.classList.remove('visible');
         carritoMenu.classList.add('oculta');
@@ -303,17 +287,39 @@ function configFinalizarCompra(){
                 Gracias por su compra
             </h3>`
     });
-}
+} */
 
+//Forma explicita jquery
+function configFinalizarCompra(){
+    $(document).ready(function() {
+        $('#finalizarCompra').on('click',(e)=>{
+            e.preventDefault();
+            guardarDireccion();
+            console.log(direcciones);
+           /*  $('.carritoMenu').removeClass('visible').addClass('oculta'); */
+            $('.carritoMenu').hide();
+            /* $('.realizarCompra').removeClass('visible').addClass('oculta'); */
+            $('.realizarCompra').hide();
+            /* $('.finCompra').removeClass('oculta').addClass('visible'); */
+            $('.finCompra').show();
+            $('.finCompra').prepend(`<h3 class=" finCompraStyle">
+                                        Gracias por su compra
+                                    </h3>`)
+        })
+    })
+};
+
+
+
+/*
 //arreglos que quedan por hacer e investigar .. +(hecho)
 //arreglar el click en botones de productos, que algunos se repiten, o cuando le da la locura . +
 // modificar el check del boton para que el active sea el boton No. +
+//cambiar de precio segun lo indicado pq si switcheo se me imprimen todos . +-,falta que se pueda volver cuantas veces quiera
 //agregar productos en las otras paginas, de momento solo el index y carrito tienen funcionalidad
 //resetear carrito
-//cambiar de precio segun lo indicado pq si switcheo se me imprimen todos . +-,falta que se pueda volver cuantas veces quiera
+//arreglar la presentacion de las carts, para que sea desde js y no armado vacio desde el html
+*/
 
+ 
 
-//Forma explicita jquery
-/* $( document ).ready(function() {
-    console.log('El DOM esta listo');
-}); */

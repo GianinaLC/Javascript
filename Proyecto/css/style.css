@@ -39,10 +39,10 @@ a{
   width: 150px;
 }
 
-.drawCart{
+/* .drawCart{
 max-width: 130vh;
 }
-
+ */
 /*--------cuadro realizar compra*/
 .oculta{
   display: none;
@@ -65,7 +65,6 @@ max-width: 130vh;
 .realizarCompra {
   position: absolute;
   z-index: 2;
-  max-width: 130vh;
   top: 150px;
   left: 0px;
 }
