@@ -72,10 +72,27 @@ for (let i = 0; i < carts.length; i++){
     carts[i].addEventListener('click', () =>{
         numerosCarts(bebidas[i]);
         totalCost(bebidas[i]);
-        
     })
 }
 
+//style sobre el boton de las cart
+$(()=>{
+    $('.add-cart').mouseenter(function() {
+        $(this).text('Agregar al carrito')
+                .css({  'background-color':'#e8e105', 
+                        'color':'#000000', 
+                        'font-weight':'bold'})
+                .animate({ width: '100%'}, 500)
+                
+    }).click(function(){
+        $(this).text('Agregado')
+    })
+    .mouseleave(function() {
+        $(this).text('COMPRAR').removeAttr('style');
+    });
+})
+
+   
 //la sgte funcion es para que no se borre el numero cargado de productos en el boton carrito
 //verifica primero si en el localstorage hay productos guardados 
 
@@ -265,7 +282,7 @@ function agregar(){
     direccionesGuardadas.push(direcciones)
 }
 
-/* 
+/*  esta parte es la que fue reemplazada con jquery en el sgte bloque
 function configFinalizarCompra(){
     //finaliza la compra, se oculta y se agradece por la compra
     let carritoMenu = document.querySelector('.carritoMenu')
@@ -292,15 +309,12 @@ function configFinalizarCompra(){
 //Forma explicita jquery
 function configFinalizarCompra(){
     $(document).ready(function() {
-        $('#finalizarCompra').on('click',(e)=>{
+        $('#finalizarCompra').click((e)=>{
             e.preventDefault();
             guardarDireccion();
             console.log(direcciones);
-           /*  $('.carritoMenu').removeClass('visible').addClass('oculta'); */
             $('.carritoMenu').hide();
-            /* $('.realizarCompra').removeClass('visible').addClass('oculta'); */
             $('.realizarCompra').hide();
-            /* $('.finCompra').removeClass('oculta').addClass('visible'); */
             $('.finCompra').show();
             $('.finCompra').prepend(`<h3 class=" finCompraStyle">
                                         Gracias por su compra
@@ -308,7 +322,6 @@ function configFinalizarCompra(){
         })
     })
 };
-
 
 
 /*
