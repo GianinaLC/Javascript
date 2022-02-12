@@ -14,12 +14,10 @@ body{
 }
 
 li:hover{
-  font-size: 1.1rem;
-  margin: 0;
-  padding: 0;
+  border-bottom-width: 1px solid #000;
 }
 
-.active{
+.active {
   color:white!important;
 } 
 
@@ -34,15 +32,15 @@ a{
     top: 110px;
     z-index: 10;
 }
+.cartPosition a:hover{
+  color:white;
+}
 
 .img-size{
   width: 150px;
 }
 
-/* .drawCart{
-max-width: 130vh;
-}
- */
+
 /*--------cuadro realizar compra*/
 .oculta{
   display: none;
