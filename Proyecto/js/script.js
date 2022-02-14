@@ -5,6 +5,7 @@ let bebidas = [
         id: 1,
         precio: 700,
         inCart: 0,
+        imgTitle:'AlamosMalbec',
         //inCart para saber cuantos hay en el carrito
     },
     
@@ -14,14 +15,16 @@ let bebidas = [
         id: 2,
         precio: 950,
         inCart: 0,
+        imgTitle:'AndelunaBlend'
     },
-      
+        
     {
         nombre: "Bianchi",
         variedad: "Malbec",
         id: 3,
         precio: 1100,
         inCart: 0,
+        imgTitle:'BianchiMalbec'
     },
             
     {
@@ -30,6 +33,7 @@ let bebidas = [
         id: 4,
         precio: 850,
         inCart: 0,
+        imgTitle:'BianchiCabS'
     },
                         
     {
@@ -38,6 +42,7 @@ let bebidas = [
         id: 5,
         precio: 600,
         inCart: 0,
+        imgTitle:'CafayateCabS'
     },
 
     {  
@@ -46,6 +51,7 @@ let bebidas = [
         id: 6,
         precio: 750 ,
         inCart: 0,
+        imgTitle:'CafayateMalbec'
     },
     
     {
@@ -54,6 +60,7 @@ let bebidas = [
         id: 7,
         precio: 1200,
         inCart: 0,
+        imgTitle:'CasilleroDelDiabloMalbec'
     },
     
     {
@@ -62,8 +69,26 @@ let bebidas = [
         id: 8,
         precio: 1000,
         inCart: 0,
+        imgTitle:'CasilleroDelDiabloBlend'
     }, 
 ];
+
+for (const producto of bebidas) {
+    //recorre el array por cada producto 
+    $(".cards").append(`
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card h-100">
+                                <img src="../images/tintos/${producto.imgTitle}.png" class="img-size mx-auto mt-2 img-fluid" alt="${producto.nombre}">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title fs-6">${producto.nombre}</h5>
+                                    <p class="card-subtitle mb-2 text-muted">${producto.variedad}.</p>
+                                    <p class="card-text">$${producto.precio}.</p>
+                                    <button class="btn btn-dark add-cart"><span>COMPRAR</span></button>
+                                </div>
+                            </div>
+                        </div>`
+                        );
+}
 
 let carts = document.querySelectorAll('.add-cart');
 //los botones comprar, mediante la clase generan el evento
@@ -82,7 +107,7 @@ $(()=>{
                 .css({  'background-color':'#e8e105', 
                         'color':'#000000', 
                         'font-weight':'bold'})
-                .animate({ width: '100%'}, 500)
+                .animate({ width: '100%'}, 300)
                 
     }).click(function(){
         $(this).text('Agregado')
@@ -171,6 +196,7 @@ function mostrarCart(){
             <div class="py-2 bd-highlight"><h5 class="fs-6">Total</h5></div> `
 
         productoContainer.innerHTML = '';
+        
         Object.values(cartItems).map(item =>{
             productoContainer.innerHTML += `
             <div class="d-flex flex-row justify-content-around ">
@@ -184,16 +210,17 @@ function mostrarCart(){
             </div>
              `
         });
+        
         productoContainer.innerHTML += `
         <div class="d-flex justify-content-end m-3">
             <h4 class="px-4">Costo total</h4>
             <h4 class="px-4">$${cartCost}</h4>
-        </div> `;
+        </div> 
 
-        productoContainer.innerHTML += `
         <div class="d-flex justify-content-center mb-3 ">
             <button type="button" class="btn btn-dark" id="btnRealizarCompra">Realizar compra</button>
         </div>`
+
         let btnRealizarCompra = document.getElementById('btnRealizarCompra');
 
         btnRealizarCompra.addEventListener('click', ()=>{
@@ -208,7 +235,7 @@ function mostrarCart(){
 
     }else if(cartEmpty){
         cartEmpty.innerHTML +=
-        `<h3 class='text-center'>Tu carrito está vacío</h3>
+        `<h3 class='text-center text-white'>Tu carrito está vacío</h3>
         <img src='../images/carritoVacio.png' class='img-fluid rounded mx-auto d-block' width='300px'>`
     };
 
@@ -231,8 +258,9 @@ function mostrarCompra(){
     let btnCheckEnvio1 = document.getElementById('btnradio1');
     let btnCheckEnvio2 = document.getElementById('btnradio2');
     let totalCompra = document.getElementById('totalCompra');
+    let envioD = document.getElementById('totalCompra')
     let envio = 300;
-    let costoFinal = parseInt(cartCost) + envio;
+    let costoFinal /* = parseInt(cartCost) + envio; */
     let datosEnvios = document.querySelector('.datosEnvio');
     
     subtotal.innerHTML += `
@@ -240,20 +268,41 @@ function mostrarCompra(){
             $${cartCost}
         </p>`
 
-
-    if(btnCheckEnvio2){
-        datosEnvios.classList.add('oculta');
-        totalCompra.innerHTML += `
-        <p class="">
-            $${cartCost}
-        </p>`
-    }
-
-    if(btnCheckEnvio1){
+        
+        
+        
+        btnCheckEnvio2
+            btnCheckEnvio2.addEventListener('click',()=>{
+            datosEnvios.classList.add('oculta');
+            totalCompra.textContent = `$${cartCost}`
+        })
+    
+    
         btnCheckEnvio1.addEventListener('click',()=>{
             datosEnvios.classList.remove('oculta');
-            totalCompra.textContent =`$${costoFinal}`;
-        })}
+            if(cartCost >= 10000){
+                envio=0;
+                costoFinal = parseInt(cartCost) + envio;
+            }else{
+                costoFinal = parseInt(cartCost) + envio;
+            }
+            
+            totalCompra.textContent =`$${costoFinal}`
+        })
+
+
+
+
+
+    /* btnCheckEnvio2.addEventListener('click',()=>{
+        datosEnvios.classList.add('oculta');
+        totalCompra.textContent = `$${cartCost}`
+    })
+
+    btnCheckEnvio1.addEventListener('click',()=>{
+        datosEnvios.classList.remove('oculta');
+        totalCompra.textContent =`$${costoFinal}`
+    }) */
     
 }
 
@@ -282,30 +331,6 @@ function agregar(){
     direccionesGuardadas.push(direcciones)
 }
 
-/*  esta parte es la que fue reemplazada con jquery en el sgte bloque
-function configFinalizarCompra(){
-    //finaliza la compra, se oculta y se agradece por la compra
-    let carritoMenu = document.querySelector('.carritoMenu')
-    let finalizarCompra = document.getElementById('finalizarCompra');
-    let finCompra = document.querySelector('.finCompra');
-
-    finalizarCompra.addEventListener('click', (e)=>{
-        e.preventDefault();
-        guardarDireccion();
-        console.log(direcciones)
-        carritoMenu.classList.remove('visible');
-        carritoMenu.classList.add('oculta');
-        realizarCompra.classList.remove('visible');
-        realizarCompra.classList.add('oculta');
-        finCompra.classList.add('visible');
-
-        finCompra.innerHTML += `
-            <h3 class=" finCompraStyle">
-                Gracias por su compra
-            </h3>`
-    });
-} */
-
 //Forma explicita jquery
 function configFinalizarCompra(){
     $(document).ready(function() {
@@ -324,14 +349,8 @@ function configFinalizarCompra(){
 };
 
 
-/*
-//arreglos que quedan por hacer e investigar .. +(hecho)
-//arreglar el click en botones de productos, que algunos se repiten, o cuando le da la locura . +
-// modificar el check del boton para que el active sea el boton No. +
-//cambiar de precio segun lo indicado pq si switcheo se me imprimen todos . +-,falta que se pueda volver cuantas veces quiera
-//agregar productos en las otras paginas, de momento solo el index y carrito tienen funcionalidad
+/*asunto pendiente
 //resetear carrito
-//arreglar la presentacion de las carts, para que sea desde js y no armado vacio desde el html
 */
 
  
