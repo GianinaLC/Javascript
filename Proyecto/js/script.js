@@ -1,313 +1,225 @@
-let bebidas = [
-    {
-        nombre: "Alamos",
-        variedad: "Malbec",
-        id: 1,
-        precio: 700,
-        inCart: 0,
-        imgTitle:'AlamosMalbec',
-        //inCart para saber cuantos hay en el carrito
-    },
-    
-    {
-        nombre:"Andeluna",
-        variedad:"Blend",
-        id: 2,
-        precio: 950,
-        inCart: 0,
-        imgTitle:'AndelunaBlend'
-    },
-        
-    {
-        nombre: "Bianchi",
-        variedad: "Malbec",
-        id: 3,
-        precio: 1100,
-        inCart: 0,
-        imgTitle:'BianchiMalbec'
-    },
-            
-    {
-        nombre:"Bianchi",
-        variedad: "Cabernet Sauvignon",
-        id: 4,
-        precio: 850,
-        inCart: 0,
-        imgTitle:'BianchiCabS'
-    },
-                        
-    {
-        nombre:"Cafayate",
-        variedad: "Cabernet Sauvignon",
-        id: 5,
-        precio: 600,
-        inCart: 0,
-        imgTitle:'CafayateCabS'
-    },
+//rdy jquery
+$(() => {
+	const URL_PRODUCTOS = '../json/productos.json';
 
-    {  
-        nombre:"Cafayate",
-        variedad: "Malbec",
-        id: 6,
-        precio: 750 ,
-        inCart: 0,
-        imgTitle:'CafayateMalbec'
-    },
-    
-    {
-        nombre:"Casillero Del Diablo",
-        variedad: "Malbec",
-        id: 7,
-        precio: 1200,
-        inCart: 0,
-        imgTitle:'CasilleroDelDiabloMalbec'
-    },
-    
-    {
-        nombre: "Casillero Del Diablo",
-        variedad: "Blend",
-        id: 8,
-        precio: 1000,
-        inCart: 0,
-        imgTitle:'CasilleroDelDiabloBlend'
-    }, 
-];
+	//utilizo fetch pq no tiene problemas con el promise, y de esa manera me carga primero los productos para luego poder seleccionarlos segun el click en el boton. Con el otro método al no terminar de cargar los productos seguía ejecutando el resto del codigo y me daba error pq los botones estaban vacios.
+	fetch(URL_PRODUCTOS)
+	.then(response => response.json())
+	.then(data => data.forEach(dato => {
+		$(".cards").append(`
+							<div class="col d-flex justify-content-center mb-4">
+								<div class="card shadow mb-1 bg-dark rounded text-center" style="width: 20rem;">
+									<h5 class="card-title pt-2 text-uppercase text-white">${dato.nombre}</h5>
+									<img src="../images/tintos/${dato.imgTitle}.png" class="card-img-top" alt="${dato.nombre}">
+									<div class="card-body">
+										<p class="card-text text-white-50 variedad">${dato.variedad}</p>
+										<h5 class="text-white">Precio: <span class="precio">$ ${dato.precio}</span></h5>
+										<div class="d-grid gap-2">
+											<button  class="btn btn-secondary button">COMPRAR</button>
+										</div>
+									</div>
+								</div>
+							</div>`
+		);
 
-for (const producto of bebidas) {
-    //recorre el array por cada producto 
-    $(".cards").append(`
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card h-100">
-                                <img src="../images/tintos/${producto.imgTitle}.png" class="img-size mx-auto mt-2 img-fluid" alt="${producto.nombre}">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title fs-6">${producto.nombre}</h5>
-                                    <p class="card-subtitle mb-2 text-muted">${producto.variedad}.</p>
-                                    <p class="card-text">$${producto.precio}.</p>
-                                    <button class="btn btn-dark add-cart"><span>COMPRAR</span></button>
-                                </div>
-                            </div>
-                        </div>`
-                        );
+		$(`.button`).mouseenter(function() {
+			$(this).text('Agregar al carrito')
+					.css({  'background-color':'#e8e105', 
+							'color':'#000000', 
+							'font-weight':'bold'})
+					.animate({ width: '100%'}, 300)
+					
+		}).click(function(){
+			$(this).text('Agregado')
+		})
+		.mouseleave(function() {
+			$(this).text('COMPRAR').removeAttr('style');
+		});
+		const clickbutton = document.querySelectorAll('.button')
+		clickbutton.forEach(btn => {
+			btn.addEventListener('click', addToCarritoItem)
+		})
+	}));
+})
+const tbody = document.querySelector('.tbody')
+
+let carrito = []
+
+function addToCarritoItem(e){
+  const button = e.target
+  const item = button.closest('.card')
+  const itemTitle = item.querySelector('.card-title').textContent;
+  const itemPrice = item.querySelector('.precio').textContent;
+  const itemVariedad = item.querySelector('.variedad').textContent;
+  const itemImg = item.querySelector('.card-img-top').src;
+  const newItem = {
+    title: itemTitle,
+    precio: itemPrice,
+    img: itemImg,
+	variedad: itemVariedad,
+    cantidad: 1
+  }
+
+  addItemCarrito(newItem)
 }
 
-let carts = document.querySelectorAll('.add-cart');
-//los botones comprar, mediante la clase generan el evento
+function addItemCarrito(newItem){
+  const alert = document.querySelector('.alert')
 
-for (let i = 0; i < carts.length; i++){
-    carts[i].addEventListener('click', () =>{
-        numerosCarts(bebidas[i]);
-        totalCost(bebidas[i]);
-    })
+  setTimeout( function(){
+    alert.classList.add('hide')
+  }, 2000)
+    alert.classList.remove('hide')
+
+  const inputElemento = tbody.getElementsByClassName('input-elemento')
+  for(let i =0; i < carrito.length ; i++){
+    if(carrito[i].title.trim() === newItem.title.trim()){
+      carrito[i].cantidad ++;
+      const inputValue = inputElemento[i]
+      inputValue.value++;
+      carritoTotal()
+      return null;
+    }
+  }
+  
+  carrito.push(newItem)
+  
+  renderCarrito()
+} 
+
+function renderCarrito(){
+  tbody.innerHTML = ''
+  carrito.map(item => {
+    const tr = document.createElement('tr')
+    tr.classList.add('ItemCarrito')
+    const Content = `
+    
+    <th scope="row">1</th>
+            <td class="table__productos">
+              <img src=${item.img}  alt="">
+              <h6 class="title">${item.title}</h6>
+            </td>
+            <td class="table__price"><p>${item.precio}</p></td>
+            <td class="table__cantidad">
+              <input type="number" min="1" value=${item.cantidad} class="input-elemento">
+              <button class="delete btn btn-danger">x</button>
+            </td>
+    
+    `
+    tr.innerHTML = Content;
+    tbody.append(tr)
+
+    tr.querySelector(".delete").addEventListener('click', removeItemCarrito)
+    tr.querySelector(".input-elemento").addEventListener('change', sumaCantidad)
+  })
+  carritoTotal()
 }
 
-//style sobre el boton de las cart
-$(()=>{
-    $('.add-cart').mouseenter(function() {
-        $(this).text('Agregar al carrito')
-                .css({  'background-color':'#e8e105', 
-                        'color':'#000000', 
-                        'font-weight':'bold'})
-                .animate({ width: '100%'}, 300)
-                
-    }).click(function(){
-        $(this).text('Agregado')
-    })
-    .mouseleave(function() {
-        $(this).text('COMPRAR').removeAttr('style');
-    });
+let Total;
+function carritoTotal(){
+  Total = 0;
+  const itemCartTotal = document.querySelector('.itemCartTotal')
+  carrito.forEach((item) => {
+    const precio = Number(item.precio.replace("$", ''))
+    Total = Total + precio*item.cantidad
+  })
+
+  itemCartTotal.innerHTML = `Subtotal $${Total}`
+  addLocalStorage()
+}
+
+function removeItemCarrito(e){
+  const buttonDelete = e.target
+  const tr = buttonDelete.closest(".ItemCarrito")
+  const title = tr.querySelector('.title').textContent;
+  for(let i=0; i<carrito.length ; i++){
+
+    if(carrito[i].title.trim() === title.trim()){
+      carrito.splice(i, 1)
+    }
+  }
+
+  const alert = document.querySelector('.remove')
+
+  setTimeout( function(){
+    alert.classList.add('remove')
+  }, 1000)
+    alert.classList.remove('remove')
+
+  tr.remove()
+  carritoTotal()
+}
+
+function sumaCantidad(e){
+  const sumaInput  = e.target
+  const tr = sumaInput.closest(".ItemCarrito")
+  const title = tr.querySelector('.title').textContent;
+  carrito.forEach(item => {
+    if(item.title.trim() === title){
+      sumaInput.value < 1 ?  (sumaInput.value = 1) : sumaInput.value;
+      item.cantidad = sumaInput.value;
+      carritoTotal()
+    }
+  })
+}
+
+function addLocalStorage(){
+  localStorage.setItem('carrito', JSON.stringify(carrito))
+}
+
+window.onload = function(){
+  const storage = JSON.parse(localStorage.getItem('carrito'));
+  if(storage){
+    carrito = storage;
+    renderCarrito()
+  }
+}
+
+//realizarCompra
+let realizarCompra = document.querySelector('.realizarCompra');
+let opacidad = document.querySelector('.opacidad')
+let btnComprar = document.getElementById('btnComprar');
+
+btnComprar.addEventListener('click', (e)=>{
+    e.preventDefault();
+    mostrar();
 })
 
-   
-//la sgte funcion es para que no se borre el numero cargado de productos en el boton carrito
-//verifica primero si en el localstorage hay productos guardados 
-
-function cartNumberMenu(){
-    productoNumeros = localStorage.getItem('numerosCarts');
-    if (productoNumeros){
-        document.querySelector('.cart span').textContent = productoNumeros;
-    }
-}
-
-//para saber cuantos elementos estoy agregando a la cart
-function numerosCarts(producto){
-    /* console.log('producto elegido', producto); */
-    let productoNumeros = localStorage.getItem('numerosCarts');
-    productoNumeros = parseInt(productoNumeros);
-
-    if(productoNumeros){
-        localStorage.setItem('numerosCarts', productoNumeros + 1);
-        document.querySelector('.cart span').textContent = productoNumeros + 1;
-    }else{
-        localStorage.setItem('numerosCarts', 1);
-        document.querySelector('.cart span').textContent = 1;
-    }
-
-    setItems(producto);
-}
-
-function setItems(producto){
-    let cartItems = localStorage.getItem('ProductosCarrito');
-    cartItems = JSON.parse(cartItems);
-    if(cartItems != null){
-        if(cartItems[producto.id] == undefined){
-            cartItems = {
-                ...cartItems,
-                [producto.id]:producto
-            }
-        }
-        cartItems[producto.id].inCart += 1;
-    } else{
-        producto.inCart = 1;
-        cartItems = {
-            [producto.id]:producto
-        }
-    }
-    
-    localStorage.setItem('ProductosCarrito', JSON.stringify(cartItems));
-}
-
-function totalCost(producto){
-    let cartCost = localStorage.getItem('costoTotal');
-
-    if (cartCost !=null){
-        cartCost = parseInt(cartCost);
-        localStorage.setItem('costoTotal',cartCost + producto.precio);
-    } else{
-        localStorage.setItem('costoTotal', producto.precio)
-    }
-
-}
-
-function mostrarCart(){
-    let cartItems = localStorage.getItem("ProductosCarrito");
-    cartItems = JSON.parse(cartItems);
-    let productoContainer = document.querySelector('.productos');
-    let cartCost = localStorage.getItem('costoTotal');
-    let cartEmpty = document.querySelector('.cartEmpty');
-    let productoTitle = document.querySelector('.productoTitle');
-
-
-    if (cartItems && productoContainer && productoTitle){
-        productoTitle.innerHTML += 
-        `   <div class="py-2 bd-highlight"><h5 class="fs-6">Productos</h5></div>
-            <div class="py-2 bd-highlight"><h5 class="fs-6">Variedad</h5></div>
-            <div class="py-2 bd-highlight"><h5 class="fs-6">Precio</h5></div>
-            <div class="py-2 bd-highlight"><h5 class="fs-6">Cantidad</h5></div>
-            <div class="py-2 bd-highlight"><h5 class="fs-6">Total</h5></div> `
-
-        productoContainer.innerHTML = '';
-        
-        Object.values(cartItems).map(item =>{
-            productoContainer.innerHTML += `
-            <div class="d-flex flex-row justify-content-around ">
-                <div class="py-2 bd-highlight">
-                    <span>${item.nombre}</span>
-                </div>
-                <div class="py-2 bd-highlight ">${item.variedad}</div>
-                <div class="py-2 bd-highlight">$${item.precio}</div>
-                <div class="py-2 bd-highlight ">${item.inCart}</div>
-                <div class="py-2 bd-highlight">$${item.inCart * item.precio}</div>
-            </div>
-             `
-        });
-        
-        productoContainer.innerHTML += `
-        <div class="d-flex justify-content-end m-3">
-            <h4 class="px-4">Costo total</h4>
-            <h4 class="px-4">$${cartCost}</h4>
-        </div> 
-
-        <div class="d-flex justify-content-center mb-3 ">
-            <button type="button" class="btn btn-dark" id="btnRealizarCompra">Realizar compra</button>
-        </div>`
-
-        let btnRealizarCompra = document.getElementById('btnRealizarCompra');
-
-        btnRealizarCompra.addEventListener('click', ()=>{
-            productos.classList.add('oculta');
-            productos.classList.add('opacity')
-            productos.classList.remove('visible');
-            realizarCompra.classList.add('visible');
-            realizarCompra.classList.remove('oculta');
-        })
-        mostrarCompra();
-        configFinalizarCompra();
-
-    }else if(cartEmpty){
-        cartEmpty.innerHTML +=
-        `<h3 class='text-center text-white'>Tu carrito está vacío</h3>
-        <img src='../images/carritoVacio.png' class='img-fluid rounded mx-auto d-block' width='300px'>`
-    };
-
-}
-
-cartNumberMenu();
-mostrarCart();
-
-//seguir con la compra
-let btnRealizarCompra = document.getElementById('btnRealizarCompra');
-let realizarCompra = document.querySelector('.realizarCompra');
-let productos = document.querySelector('.productos');
-
-
-////// form realizar compra --oculta al principio--
-
-function mostrarCompra(){
-    let cartCost = localStorage.getItem('costoTotal');
-    let subtotal = document.getElementById('subtotal');
+function mostrar(){
+    realizarCompra.classList.remove('oculta');
+    opacidad.classList.add('opacity')
     let btnCheckEnvio1 = document.getElementById('btnradio1');
     let btnCheckEnvio2 = document.getElementById('btnradio2');
     let totalCompra = document.getElementById('totalCompra');
-    let envioD = document.getElementById('totalCompra')
     let envio = 300;
     let costoFinal /* = parseInt(cartCost) + envio; */
     let datosEnvios = document.querySelector('.datosEnvio');
-    
-    subtotal.innerHTML += `
-        <p class="">
-            $${cartCost}
-        </p>`
 
-        
-        
-        
-        btnCheckEnvio2
-            btnCheckEnvio2.addEventListener('click',()=>{
-            datosEnvios.classList.add('oculta');
-            totalCompra.textContent = `$${cartCost}`
-        })
-    
-    
-        btnCheckEnvio1.addEventListener('click',()=>{
-            datosEnvios.classList.remove('oculta');
-            if(cartCost >= 10000){
-                envio=0;
-                costoFinal = parseInt(cartCost) + envio;
-            }else{
-                costoFinal = parseInt(cartCost) + envio;
-            }
-            
-            totalCompra.textContent =`$${costoFinal}`
-        })
-
-
-
-
-
-    /* btnCheckEnvio2.addEventListener('click',()=>{
+//btnradio2=no
+    btnCheckEnvio2.addEventListener('click',()=>{
         datosEnvios.classList.add('oculta');
-        totalCompra.textContent = `$${cartCost}`
-    })
+    totalCompra.textContent = `$${Total}`
+})
 
+//btnradio1=si
     btnCheckEnvio1.addEventListener('click',()=>{
-        datosEnvios.classList.remove('oculta');
+    datosEnvios.classList.remove('oculta');
+        if(Total >= 10000){
+            envio=0;
+            costoFinal = Total + envio;
+        }else{
+            costoFinal = Total + envio;
+        }
         totalCompra.textContent =`$${costoFinal}`
-    }) */
-    
-}
+    })
+    configFinalizarCompra();
+};
+
+
 
 ///////////direcion para el envio del pedido
 let direcciones;
+
 
 function guardarDireccion() {
     class Direccion {
@@ -334,7 +246,7 @@ function agregar(){
 //Forma explicita jquery
 function configFinalizarCompra(){
     $(document).ready(function() {
-        $('#finalizarCompra').click((e)=>{
+        $('#vaciarCarro').click((e)=>{
             e.preventDefault();
             guardarDireccion();
             console.log(direcciones);
@@ -343,15 +255,19 @@ function configFinalizarCompra(){
             $('.finCompra').show();
             $('.finCompra').prepend(`<h3 class=" finCompraStyle">
                                         Gracias por su compra
-                                    </h3>`)
+                                    </h3>`) 
+			vaciarCarro()
+			$('.carritoMenu').show();
+        	$('.realizarCompra').show();
+        	$('.finCompra').hide();
         })
     })
 };
 
+function vaciarCarro(){
+    carrito = [];
+	localStorage.removeItem('carrito');
+	addToCarritoItem();
+}
 
-/*asunto pendiente
-//resetear carrito
-*/
-
- 
-
+//quizas aplicar animacion para que vuelva a mostrarse el carrito en la nueva compra. el local se resetea, pero el cartel de gracias por la compra persiste..
