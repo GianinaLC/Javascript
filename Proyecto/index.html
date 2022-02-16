@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -10,58 +10,141 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&family=Poppins:wght@100;300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>CAVA SIN FIN</title>
-</head>
+    <title>CON JSON</title>
+  </head>
 
-<body>
-    <div class="container-fluid text-center bg-logo">
+
+ <body>
+	<div class="container-fluid text-center bg-nav-logo">
         <a class="navbar-brand text-center" href="./index.html"><img src="./images/logo5.png" class="img-fluid" width="200px"></a>
     </div>
-    <div class="navbar navbar-expand-lg container-fluid navbar-light bg-logo">
+    <div class="navbar navbar-expand-lg container-fluid navbar-light bgHam m-0 p-1">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-around" id="navbarTogglerDemo02">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="./index.html">Vinos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./pages/licores.html">Licores</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./pages/whiskys.html">Whiskys</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./pages/cervezas.html">Cervezas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./pages/accesorios.html">Accesorios</a>
-                </li>
-            </ul>
+        <div class="collapse navbar-collapse justify-content-around m-0" id="navbarTogglerDemo02">
+            <ul class="nav nav-pills py-2 container m-0" id="pills-tab" role="tablist">
+				<li class="nav-item m-1" role="presentation">
+					<a class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
+						Productos
+					</a>
+				</li>
+				<li class="nav-item m-1" role="presentation">
+					<a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
+						Carrito
+					</a>
+				</li>
+			</ul>
         </div>
     </div>
-    <!-- boton carrito -->
-    <div class="cartPosition">
-        <button class="btn btn-dark">
-            <p class="mb-0 cart">
-                <a href="./pages/carrito.html"><i class="fas fa-shopping-cart"></i><span class="p-1">0</span></a>
-            </p>
-        </button>
+	<!--------------------------fin nav------------------------------>
+
+	<!-------------------PAGINA------------------>
+<main>
+	<!-- cartel agregar o quitar producto -->
+    <div class="alert container position-sticky top-0 alert-primary hide" role="alert">
+    	Producto Añadido al carrito!
+    </div>
+    <div class="alert container position-sticky top-0 alert-danger remove" role="alert">
+      	Producto removido!
     </div>
 
+	<!-----------------cards----------------->
 
-    <!-------------------PAGINA INDEX------------------>
-    <article class="container-fluid p-0 bgIndex">
-        <div class="container">
-            <div class='row cards g-3 p-5'> 
-                <!-- cards -->
-            </div>
-        </div>
-    </article>
+    <div class="tab-content" id="pills-tabContent">
+      	<!-- <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+			<h2 class="m-4 ">Home</h2>
+		</div> -->
+
+      	<div class="tab-pane fade show active container" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        	<div class='row cards g-3 p-5'>
+				<!-- mostrar cards -->
+			</div>
+
+      	</div>
+
+		<div class="tab-pane fade opacidad  carrito carritoMenu" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+			<table class="table table-dark table-hover my-5">
+				<thead>
+				<tr class="">
+					<th scope="col">#</th>
+					<th scope="col">Productos</th>
+					<th scope="col">Precio</th>
+					<th scope="col">Cantidad</th>
+				</tr>
+				</thead>
+				<tbody class="tbody">
+				
+				</tbody>
+			</table>
+
+			<div class="row col-12 m-1 bg-light mb-5">
+				<div class="m-0 p-4 col-12 col-sm-6">
+					<label class="form-label itemCartTotal">Subtotal: 0</label>
+				</div>
+				<div class="m-0 p-4 col-12 col-sm-6">
+					<button class="btn btn-dark" id="btnComprar">COMPRAR</button>
+				</div>
+			</div>
+      	</div>
+    </div>
+
+	
+
+	<!-- -------parte oculta, relizacion del pago-------- -->
+	<div class="p-5 realizarCompra oculta bg-light mb-5">
+		<form class="p-3 justify-content-center bg-pago ">
+			<div class="row col-12 p-2">
+				<div class="mb-3 col-6 col-sm-6">
+					<p class="form-label">Envío</p>
+				</div>
+				<div class="btn-group mb-3 col-6 col-sm-4" role="group" aria-label="Basic radio toggle button group">
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" >
+					<label class="btn btn-outline-secondary btn-sm" for="btnradio1">Si</label>
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+					<label class="btn btn-outline-secondary btn-sm" for="btnradio2">No</label>
+				</div>
+				<div>
+					<p>
+						El envío es de $300 o gratis con la compra igual o mayor a 10mil.
+					</p>
+				</div>
+				<div class="mb-3 datosEnvio oculta col-12 ">
+					<label class="form-label">Direccion</label>
+					<input class="form-control mb-3" id="direccion">
+					<label class="form-label">Numero</label>
+					<input class="form-control mb-3" id="numeroCasa">
+					<label for="exampleInputPassword1" class="form-label">Localidad</label>
+					<input class="form-control mb-3" id="localidad">
+				</div>  
+				
+			</div>
+
+			<div class="row justify-content-center ">
+				<div class="mb-3 col-12 col-sm-6">
+					<label  class="form-label text-uppercase">Total de la compra</label>
+				</div>
+				<div class="mb-3 col-12 col-sm-6">
+					<label class="shadow px-2 fs-4" id="totalCompra" > </label>
+				</div>
+				<div class="col-4 ">
+					<button type="submit" class="btn btn-dark " id="vaciarCarro">Finalizar compra</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<div class="finCompra oculta m-5">
+			<!-- graciasporsucompra -->
+	</div>
+</main>
+
+	
+	
 
     <!----------------------- FOOTER ------------------>
-    <footer class=" container-fluid bg-dark bg-gradient p-5 pb-0 m-0 text-white">
+
+	<footer class=" container-fluid bg-dark bg-gradient p-5 pb-0 m-0 text-white">
         <div class="row ">
             <div class="col-12 col-sm-6">
                 <div class="p-2">
@@ -102,14 +185,15 @@
                     <i class="fab fa-instagram"></i>
                 </div>
                 <div>
-                    <p class="fs-6">Copyright 2022 - DesingByGLC</p>
+                    <p class="fs-6 text-muted">Copyright 2022 - DesingByGLC</p>
                 </div>
             </div>
         </div>
-    </footer>
+    </footer> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="./js/script.js"></script>
-</body>
+  </body>
 </html>
+
