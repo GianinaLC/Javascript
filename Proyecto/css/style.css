@@ -39,6 +39,10 @@ display: none;
 display: block;
 }
 
+.hide, .remove{
+  display: none;
+}
+
 .opacity{
 opacity: 0.5;
 }
