@@ -45,6 +45,7 @@ const tbody = document.querySelector('.tbody')
 
 let carrito = []
 
+
 function addToCarritoItem(e){
   const button = e.target
   const item = button.closest('.card')
@@ -59,18 +60,10 @@ function addToCarritoItem(e){
 	variedad: itemVariedad,
     cantidad: 1
   }
-
   addItemCarrito(newItem)
 }
 
 function addItemCarrito(newItem){
-  const alert = document.querySelector('.alert')
-
-  setTimeout( function(){
-    alert.classList.add('hide')
-  }, 2000)
-    alert.classList.remove('hide')
-
   const inputElemento = tbody.getElementsByClassName('input-elemento')
   for(let i =0; i < carrito.length ; i++){
     if(carrito[i].title.trim() === newItem.title.trim()){
@@ -94,9 +87,9 @@ function renderCarrito(){
     tr.classList.add('ItemCarrito')
     const Content = `
     
-    <th scope="row">1</th>
+    <th scope="row"></th>
             <td class="table__productos">
-              <img src=${item.img}  alt="">
+              <img src=${item.img}  alt="${item.title}">
               <h6 class="title">${item.title}</h6>
             </td>
             <td class="table__price"><p>${item.precio}</p></td>
@@ -116,9 +109,10 @@ function renderCarrito(){
 }
 
 let Total;
+const itemCartTotal = document.querySelector('.itemCartTotal')
 function carritoTotal(){
   Total = 0;
-  const itemCartTotal = document.querySelector('.itemCartTotal')
+  
   carrito.forEach((item) => {
     const precio = Number(item.precio.replace("$", ''))
     Total = Total + precio*item.cantidad
@@ -138,13 +132,6 @@ function removeItemCarrito(e){
       carrito.splice(i, 1)
     }
   }
-
-  const alert = document.querySelector('.remove')
-
-  setTimeout( function(){
-    alert.classList.add('remove')
-  }, 1000)
-    alert.classList.remove('remove')
 
   tr.remove()
   carritoTotal()
@@ -250,23 +237,37 @@ function configFinalizarCompra(){
             e.preventDefault();
             guardarDireccion();
             console.log(direcciones);
-            $('.carritoMenu').hide();
+			divDespedida()
+            /* $('.carritoMenu').hide();
             $('.realizarCompra').hide();
-            $('.finCompra').show();
-            $('.finCompra').prepend(`<h3 class=" finCompraStyle">
-                                        Gracias por su compra
-                                    </h3>`) 
+            $('.finCompra').show(); */
+			/* tbody.innerHTML= ''; */
 			vaciarCarro()
-			$('.carritoMenu').show();
+			/* $('.carritoMenu').show();
         	$('.realizarCompra').show();
-        	$('.finCompra').hide();
+        	$('.finCompra').hide(); */
         })
     })
 };
 
+
+function divDespedida(){
+	const alert = document.querySelector('.alert')
+
+	setTimeout( function(){
+		alert.classList.add('hide')
+	}, 2000)
+		alert.classList.remove('hide')
+
+	realizarCompra.classList.add('oculta');
+    opacidad.classList.remove('opacity')
+
+}
 function vaciarCarro(){
-    carrito = [];
+	tbody.innerHTML = '';
+	itemCartTotal.innerHTML = 'Subtotal: 0'
 	localStorage.removeItem('carrito');
+	carrito = [];
 	addToCarritoItem();
 }
 
