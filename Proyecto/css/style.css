@@ -35,6 +35,7 @@ width: 100%;
 .oculta{
 display: none;
 }
+
 .visible{
 display: block;
 }
@@ -47,19 +48,26 @@ display: block;
 opacity: 0.5;
 }
 
+input:invalid {
+  box-shadow: 0 0 5px 1px rgba(255, 0, 0, 0.651);
+}
 
-.table__productos{
+input:focus:invalid {
+  box-shadow: none;
+}
+
+.tabla-productos{
 display: flex;
 }
 
-.table__productos > img{
+.tabla-productos > img{
 width: 9rem;
 object-fit: contain;
 border-radius: 6px;
 margin-right: 20px;
 }
 
-.table__cantidad > input{
+.tabla-cantidad > input{
 width: 40px;
 border: none;
 outline: 0;
@@ -73,9 +81,29 @@ margin-bottom: 20px;
 display: none;
 }
 
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .finCompraStyle{
 background-color: burlywood;
 padding: 10px;
 text-align: center;
 margin: 10px;
 }
+
+.realizarCompra{
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+

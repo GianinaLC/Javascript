@@ -78,29 +78,21 @@
 					
 				</tr>
 			</table>
-
-			<!-- <div class="row col-12 m-1 bg-light mb-5 table-secondary">
-				<div class="m-0 p-4 col-12 col-sm-6">
-					<label class="form-label itemCartTotal">Subtotal: 0</label>
-				</div>
-				<div class="m-0 p-4 col-12 col-sm-6">
-					<button class="btn btn-dark" id="btnComprar">COMPRAR</button>
-				</div>
-			</div> -->
       	</div>
     </div>
 
 	<!-- -------parte oculta, relizacion del pago-------- -->
 	<div class="p-5 realizarCompra oculta bg-light mb-5">
 		<form class="p-3 justify-content-center bg-pago ">
+			<span class="close">x</span>
 			<div class="row col-12 p-2">
 				<div class="mb-3 col-6 col-sm-6">
 					<p class="form-label">Envío</p>
 				</div>
 				<div class="btn-group mb-3 col-6 col-sm-4" role="group" aria-label="Basic radio toggle button group">
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" >
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
 					<label class="btn btn-outline-secondary btn-sm" for="btnradio1">Si</label>
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked>
 					<label class="btn btn-outline-secondary btn-sm" for="btnradio2">No</label>
 				</div>
 				<div>
@@ -110,11 +102,11 @@
 				</div>
 				<div class="mb-3 datosEnvio oculta col-12 ">
 					<label class="form-label">Dirección</label>
-					<input class="form-control mb-3" id="direccion">
+					<input class="form-control mb-3" id="direccion" required>
 					<label class="form-label">Número</label>
-					<input class="form-control mb-3" id="numeroCasa">
-					<label for="exampleInputPassword1" class="form-label">Localidad</label>
-					<input class="form-control mb-3" id="localidad">
+					<input class="form-control mb-3" id="numeroCasa" required>
+					<label class="form-label">Localidad</label>
+					<input class="form-control mb-3" id="localidad" required>
 				</div>  
 				
 			</div>
@@ -124,7 +116,7 @@
 					<label  class="form-label text-uppercase">Total de la compra</label>
 				</div>
 				<div class="mb-3 col-12 col-sm-6">
-					<label class="shadow px-2 fs-4" id="totalCompra" > </label>
+					<label class="shadow px-2 fs-4" id="totalCompra"> </label>
 				</div>
 				<div class="col-4 ">
 					<button type="submit" class="btn btn-dark " id="vaciarCarro">Finalizar compra</button>
