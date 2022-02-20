@@ -2,7 +2,7 @@
 $(() => {
 	const URL_PRODUCTOS = '../json/productos.json';
 
-	//utilizo fetch pq no tiene problemas con el promise, y de esa manera me carga primero los productos para luego poder seleccionarlos segun el click en el boton. Con el otro método al no terminar de cargar los productos seguía ejecutando el resto del codigo y me daba error pq los botones estaban vacios.
+//utilizo fetch pq no tiene problemas con el promise, y de esa manera me carga primero los productos para luego poder seleccionarlos segun el click en el boton. Con el otro método al no terminar de cargar los productos seguía ejecutando el resto del codigo y me daba error pq los botones estaban vacios.
 	fetch(URL_PRODUCTOS)
 	.then(response => response.json())
 	.then(data => data.forEach(dato => {
@@ -22,6 +22,7 @@ $(() => {
 							</div>`
 		);
 
+		//animacion al boton comprar
 		$(`.button`).mouseenter(function() {
 			$(this).text('Agregar al carrito')
 					.css({  'background-color':'#e8e105', 
@@ -35,85 +36,87 @@ $(() => {
 		.mouseleave(function() {
 			$(this).text('COMPRAR').removeAttr('style');
 		});
+
 		const clickbutton = document.querySelectorAll('.button')
 		clickbutton.forEach(btn => {
 			btn.addEventListener('click', addToCarritoItem)
 		})
 	}));
 })
+
 const tbody = document.querySelector('.tbody')
 
 let carrito = []
 
-
 function addToCarritoItem(e){
-  const button = e.target
-  const item = button.closest('.card')
-  const itemTitle = item.querySelector('.card-title').textContent;
-  const itemPrice = item.querySelector('.precio').textContent;
-  const itemVariedad = item.querySelector('.variedad').textContent;
-  const itemImg = item.querySelector('.card-img-top').src;
-  const newItem = {
-    title: itemTitle,
-    precio: itemPrice,
-    img: itemImg,
-	variedad: itemVariedad,
-    cantidad: 1
-  }
-  addItemCarrito(newItem)
+	const button = e.target
+	const item = button.closest('.card')
+	const itemTitle = item.querySelector('.card-title').textContent;
+	const itemPrice = item.querySelector('.precio').textContent;
+	const itemVariedad = item.querySelector('.variedad').textContent;
+	const itemImg = item.querySelector('.card-img-top').src;
+	const newItem = {
+		title: itemTitle,
+		precio: itemPrice,
+		img: itemImg,
+		variedad: itemVariedad,
+		cantidad: 1
+	}
+	addItemCarrito(newItem)
 }
 
+//trim() devuelve la cadena de texto despojada de los espacios en blanco en ambos extremos
 function addItemCarrito(newItem){
-  const inputElemento = tbody.getElementsByClassName('input-elemento')
-  for(let i =0; i < carrito.length ; i++){
-    if(carrito[i].title.trim() === newItem.title.trim()){
-      carrito[i].cantidad ++;
-      const inputValue = inputElemento[i]
-      inputValue.value++;
-      carritoTotal()
-      return null;
-    }
-  }
-  
-  carrito.push(newItem)
-  
-  renderCarrito()
+	const inputElemento = tbody.getElementsByClassName('input-elemento')
+	for(let i =0; i < carrito.length ; i++){
+		if(carrito[i].title.trim() === newItem.title.trim()){
+		carrito[i].cantidad ++;
+		const inputValue = inputElemento[i]
+		inputValue.value++;
+		carritoTotal()
+		return null;
+		}
+	}
+	
+	carrito.push(newItem)
+	
+	renderCarrito()
 } 
 
 function renderCarrito(){
-  tbody.innerHTML = ''
-  carrito.map(item => {
+  	tbody.innerHTML = '';
+  	carrito.map(item => {
     const tr = document.createElement('tr')
     tr.classList.add('ItemCarrito')
     const Content = `
-    
-    <th scope="row"></th>
-            <td class="table__productos">
-              <img src=${item.img}  alt="${item.title}">
-              <h6 class="title">${item.title}</h6>
-            </td>
-            <td class="table__price"><p>${item.precio}</p></td>
-            <td class="table__cantidad">
-              <input type="number" min="1" value=${item.cantidad} class="input-elemento">
-              <button class="delete btn btn-danger">x</button>
-            </td>
-    
-    `
+						<th scope="row"></th>
+								<td class="tabla-productos">
+								<img src=${item.img}  alt="${item.title}">
+								<h6 class="title">${item.title}</h6>
+								</td>
+								<td class="tabla-precio"><p>${item.precio}</p></td>
+								<td class="tabla-cantidad">
+								<input type="number" min="1" value=${item.cantidad} class="input-elemento">
+								<button class="delete btn btn-danger">x</button>
+								</td>
+						
+					`
     tr.innerHTML = Content;
     tbody.append(tr)
 
     tr.querySelector(".delete").addEventListener('click', removeItemCarrito)
     tr.querySelector(".input-elemento").addEventListener('change', sumaCantidad)
   })
+
   carritoTotal()
 }
 
 let Total;
 const itemCartTotal = document.querySelector('.itemCartTotal')
+
 function carritoTotal(){
-  Total = 0;
-  
-  carrito.forEach((item) => {
+	Total = 0;
+  	carrito.forEach((item) => {
     const precio = Number(item.precio.replace("$", ''))
     Total = Total + precio*item.cantidad
   })
@@ -122,11 +125,12 @@ function carritoTotal(){
   addLocalStorage()
 }
 
+//splice() cambia el contenido de un array eliminando elementos existentes y/o agregando nuevos elementos.
 function removeItemCarrito(e){
-  const buttonDelete = e.target
-  const tr = buttonDelete.closest(".ItemCarrito")
-  const title = tr.querySelector('.title').textContent;
-  for(let i=0; i<carrito.length ; i++){
+  	const buttonDelete = e.target
+  	const tr = buttonDelete.closest(".ItemCarrito")
+  	const title = tr.querySelector('.title').textContent;
+  	for(let i=0; i<carrito.length ; i++){
 
     if(carrito[i].title.trim() === title.trim()){
       carrito.splice(i, 1)
@@ -137,11 +141,12 @@ function removeItemCarrito(e){
   carritoTotal()
 }
 
+//closest devuelve el ascendiente más cercano al elemento actual (o el propio elemento actual) que coincida con el selector proporcionado por parámetro.
 function sumaCantidad(e){
-  const sumaInput  = e.target
-  const tr = sumaInput.closest(".ItemCarrito")
-  const title = tr.querySelector('.title').textContent;
-  carrito.forEach(item => {
+	const sumaInput  = e.target
+	const tr = sumaInput.closest(".ItemCarrito")
+	const title = tr.querySelector('.title').textContent;
+	carrito.forEach(item => {
     if(item.title.trim() === title){
       sumaInput.value < 1 ?  (sumaInput.value = 1) : sumaInput.value;
       item.cantidad = sumaInput.value;
@@ -154,59 +159,16 @@ function addLocalStorage(){
   localStorage.setItem('carrito', JSON.stringify(carrito))
 }
 
-window.onload = function(){
-  const storage = JSON.parse(localStorage.getItem('carrito'));
-  if(storage){
-    carrito = storage;
-    renderCarrito()
-  }
-}
+//cerrar ventana compra
+let close = document.querySelector('.close');
 
-//realizarCompra
-let realizarCompra = document.querySelector('.realizarCompra');
-let opacidad = document.querySelector('.opacidad')
-let btnComprar = document.getElementById('btnComprar');
-
-btnComprar.addEventListener('click', (e)=>{
-    e.preventDefault();
-    mostrar();
+close.addEventListener('click', ()=>{
+	realizarCompra.classList.add('oculta');
+	opacidad.classList.remove('opacity')
 })
-
-function mostrar(){
-    realizarCompra.classList.remove('oculta');
-    opacidad.classList.add('opacity')
-    let btnCheckEnvio1 = document.getElementById('btnradio1');
-    let btnCheckEnvio2 = document.getElementById('btnradio2');
-    let totalCompra = document.getElementById('totalCompra');
-    let envio = 300;
-    let costoFinal /* = parseInt(cartCost) + envio; */
-    let datosEnvios = document.querySelector('.datosEnvio');
-
-//btnradio2=no
-    btnCheckEnvio2.addEventListener('click',()=>{
-        datosEnvios.classList.add('oculta');
-    totalCompra.textContent = `$${Total}`
-})
-
-//btnradio1=si
-    btnCheckEnvio1.addEventListener('click',()=>{
-    datosEnvios.classList.remove('oculta');
-        if(Total >= 10000){
-            envio=0;
-            costoFinal = Total + envio;
-        }else{
-            costoFinal = Total + envio;
-        }
-        totalCompra.textContent =`$${costoFinal}`
-    })
-    configFinalizarCompra();
-};
-
-
 
 ///////////direcion para el envio del pedido
-let direcciones;
-
+let direccionIngresada;
 
 function guardarDireccion() {
     class Direccion {
@@ -221,36 +183,91 @@ function guardarDireccion() {
     let numeroCasa = document.getElementById('numeroCasa').value;
     let localidad = document.getElementById('localidad').value;
 
-    direcciones = (new Direccion(direccion,numeroCasa,localidad));
-    agregar();
+    direccionIngresada = (new Direccion(direccion,numeroCasa,localidad));
 }
 
-const direccionesGuardadas = [];
-function agregar(){
-    direccionesGuardadas.push(direcciones)
+
+//realizarCompra
+let realizarCompra = document.querySelector('.realizarCompra');
+let opacidad = document.querySelector('.opacidad')
+let btnComprar = document.getElementById('btnComprar');
+
+btnComprar.addEventListener('click', (e)=>{
+    e.preventDefault();
+    mostrar();
+})
+
+function validarInput() {
+    if (document.getElementById('direccion').value == null || document.getElementById('direccion').value == ''){
+        document.getElementById('direccion').focus();
+        return false;
+    }else if (document.getElementById('numeroCasa').value == null || document.getElementById('numeroCasa').value == ''){
+        document.getElementById('numeroCasa').focus();
+		return false;
+
+	}else if(document.getElementById('localidad').value == null || document.getElementById('localidad').value == ''){
+        document.getElementById('localidad').focus();
+		return false;
+	}else{
+		guardarDireccion();
+		finalizarCompra();
+	}
 }
 
-//Forma explicita jquery
-function configFinalizarCompra(){
-    $(document).ready(function() {
-        $('#vaciarCarro').click((e)=>{
-            e.preventDefault();
-            guardarDireccion();
-            console.log(direcciones);
-			divDespedida()
-            /* $('.carritoMenu').hide();
-            $('.realizarCompra').hide();
-            $('.finCompra').show(); */
-			/* tbody.innerHTML= ''; */
-			vaciarCarro()
-			/* $('.carritoMenu').show();
-        	$('.realizarCompra').show();
-        	$('.finCompra').hide(); */
-        })
+let btnCheckEnvio1 = document.getElementById('btnradio1');
+    let btnCheckEnvio2 = document.getElementById('btnradio2');
+function mostrar(){
+    realizarCompra.classList.remove('oculta');
+    opacidad.classList.add('opacity')
+    
+    let totalCompra = document.getElementById('totalCompra');
+    let envio = 300;
+    let costoFinal;
+    let datosEnvios = document.querySelector('.datosEnvio');
+
+	totalCompra.textContent = `$${Total}`
+
+//btnradio2=no
+    btnCheckEnvio2.addEventListener('click',()=>{
+        datosEnvios.classList.add('oculta');
+		totalCompra.textContent = `$${Total}`
+})
+
+//btnradio1=si
+    btnCheckEnvio1.addEventListener('click',()=>{
+    datosEnvios.classList.remove('oculta');
+        if(Total >= 10000){
+            envio=0;
+            costoFinal = Total + envio;
+        }else{
+            costoFinal = Total + envio;
+        }
+        totalCompra.textContent =`$${costoFinal}`
+		
     })
 };
 
 
+//Forma explicita jquery
+$(document).ready(function() {
+	$('#vaciarCarro').click((e)=>{
+		e.preventDefault();
+		if(btnCheckEnvio1.checked){
+			validarInput();
+		}else if(btnCheckEnvio2.checked){
+			finalizarCompra()
+		}
+		
+	})
+})
+	
+function finalizarCompra(){
+		/* guardarDireccion(); */
+		vaciarCarro()
+		divDespedida()
+}
+
+//gracias por la compra
 function divDespedida(){
 	const alert = document.querySelector('.alert')
 
@@ -263,12 +280,24 @@ function divDespedida(){
     opacidad.classList.remove('opacity')
 
 }
+
 function vaciarCarro(){
 	tbody.innerHTML = '';
 	itemCartTotal.innerHTML = 'Subtotal: 0'
 	localStorage.removeItem('carrito');
 	carrito = [];
-	addToCarritoItem();
+	carritoTotal();
 }
 
-//quizas aplicar animacion para que vuelva a mostrarse el carrito en la nueva compra. el local se resetea, pero el cartel de gracias por la compra persiste..
+window.onload = function(){
+	const storage = JSON.parse(localStorage.getItem('carrito'));
+	if(storage){
+	  	carrito = storage;
+	  	renderCarrito()
+	}
+  }
+  
+
+
+  //salir de la ventana comprar-envio, para seguir agregando mas al carrito
+  
