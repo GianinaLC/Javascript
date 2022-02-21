@@ -171,7 +171,7 @@ closePago.addEventListener('click', ()=>{
 })
 
 
-///////////direcion para el envio del pedido
+//direcion para el envio del pedido
 let direccionIngresada;
 let direcciones = [];
 
