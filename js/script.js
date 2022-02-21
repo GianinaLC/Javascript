@@ -1,6 +1,6 @@
 //rdy jquery
 $(() => {
-	const URL_PRODUCTOS = './json/productos.json';
+	const URL_PRODUCTOS = 'json/productos.json';
 
 //utilizo fetch pq no tiene problemas con el promise, y de esa manera me carga primero los productos para luego poder seleccionarlos segun el click en el boton. Con el otro método al no terminar de cargar los productos seguía ejecutando el resto del codigo y me daba error pq los botones estaban vacios.
 	fetch(URL_PRODUCTOS)
@@ -10,7 +10,7 @@ $(() => {
 							<div class="col d-flex justify-content-center mb-4">
 								<div class="card shadow mb-1 bg-dark rounded text-center" style="width: 20rem;">
 									<h5 class="card-title pt-2 text-uppercase text-white">${dato.nombre}</h5>
-									<img src="./images/tintos/${dato.imgTitle}.png" class="card-img-top" alt="${dato.nombre}">
+									<img src="images/tintos/${dato.imgTitle}.png" class="card-img-top" alt="${dato.nombre}">
 									<div class="card-body">
 										<p class="card-text text-white-50 variedad">${dato.variedad}</p>
 										<h5 class="text-white">Precio: <span class="precio">$ ${dato.precio}</span></h5>
