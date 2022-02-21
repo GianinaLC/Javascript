@@ -1,6 +1,6 @@
 //rdy jquery
 $(() => {
-	const URL_PRODUCTOS = 'https://github.com/GianinaLC/Javascript/blob/master/Proyecto/json/productos.json';
+	const URL_PRODUCTOS = 'https://gianinalc.github.io/Javascript/Proyecto/json/productos.json';
 
 //utilizo fetch pq no tiene problemas con el promise, y de esa manera me carga primero los productos para luego poder seleccionarlos segun el click en el boton. Con el otro método al no terminar de cargar los productos seguía ejecutando el resto del codigo y me daba error pq los botones estaban vacios.
 	fetch(URL_PRODUCTOS)
