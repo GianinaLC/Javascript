@@ -11,12 +11,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&family=Poppins:wght@100;300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>CAVA SIN FIN</title>
-  </head>
+  </head> 
 
 
  <body>
 	<div class="container-fluid text-center bg-nav-logo">
-        <a class="navbar-brand text-center" href="./index.html"><img src="./images/logo5.png" class="img-fluid" width="200px"></a>
+        <a class="navbar-brand text-center" href="./index.html"><img src="./images/logo.png" class="img-fluid" alt="Logo Cava Sin Fin" width="200px"></a>
     </div>
     <div class="navbar navbar-expand-lg container-fluid navbar-light bgHam m-0 p-1">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,9 +39,9 @@
     </div>
 	<!--------------------------fin nav------------------------------>
 
-	<!-------------------PAGINA------------------>
+	<!---------------------------------------PAGINA--------------------------------------------------->
 <main>
-	<!-----------------cards----------------->
+	<!-----------alert compra------------->
 	<div class="alert container position-sticky top-0 alert-secondary hide" role="alert">
 		Gracias por su compra
 	</div>
@@ -73,7 +73,6 @@
 					<label class="form-label">*Localidad</label>
 					<input class="form-control mb-3" id="localidad" required>
 				</div>  
-				
 			</div>
 
 			<div class="row justify-content-center ">
@@ -101,16 +100,17 @@
 		</form>
 	</div>
 
+	<!------ --------cards --------->
     <div class="tab-content " id="pills-tabContent">
       	<div class="tab-pane fade show active container" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
         	<div class='row cards g-3 p-5'>
-				<!-- mostrar cards -->
+				<!-- mostrar cards productos -->
 			</div>
       	</div>
 
 		<div class="tab-pane fade opacidad carrito carritoMenu table-responsive" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
 			<table class="table table-secondary table-hover my-5" >
-				<thead>
+				<thead><!-- productos carrito -->
 					<tr class="">
 						<th scope="col">#</th>
 						<th scope="col">Productos</th>
@@ -130,16 +130,13 @@
 					<th scope="col">
 						<button class="btn btn-dark" id="btnComprar">COMPRAR</button>
 					</th>
-					
 				</tr>
 			</table>
       	</div>
     </div>
-
 </main>
 	
-
-    <!----------------------- FOOTER ------------------>
+    <!------------------------------------- FOOTER ---------------------------------->
 
 	<footer class=" container-fluid bg-dark bg-gradient p-5 m-0 text-white">
         <div class="row ">
