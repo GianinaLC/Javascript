@@ -1,0 +1,73 @@
+[
+    {
+        "nombre": "Alamos",
+        "variedad": "Malbec",
+        "id": "1",
+        "precio": "700",
+        "imgTitle": "AlamosMalbec"
+    
+    },
+    
+    {
+        "nombre":"Andeluna",
+        "variedad":"Blend",
+        "id": "2",
+        "precio": "950",
+        "imgTitle":"AndelunaBlend"
+    },
+        
+    {
+        "nombre": "Bianchi",
+        "variedad": "Malbec",
+        "id": "3",
+        "precio": "1100",
+        "imgTitle":"BianchiMalbec"
+    },
+
+    {  
+        "nombre":"Cafayate",
+        "variedad": "Malbec",
+        "id": "4",
+        "precio": "750" ,
+        "imgTitle":"CafayateMalbec"
+    },
+    
+    {
+        "nombre":"Casillero Del Diablo",
+        "variedad": "Malbec",
+        "id": "5",
+        "precio": "1200",
+        "imgTitle":"CasilleroDelDiabloMalbec"
+    },
+    
+    {
+        "nombre": "Hermandad",
+        "variedad": "Malbec",
+        "id": "6",
+        "precio": "1000",
+        "imgTitle":"HermandadMalbec"
+    }, 
+    {
+        "nombre":"Trapiche",
+        "variedad": "Cabernet Sauvignon",
+        "id": "7",
+        "precio": "950",
+        "imgTitle":"TrapicheCabS"
+    },
+                      
+    {
+        "nombre":"Santa Julia",
+        "variedad": "Cabernet Sauvignon",
+        "id": "8",
+        "precio": "700",
+        "imgTitle":"SantaJuliaCabS"
+    },
+
+    {
+        "nombre":"Fond De Cave",
+        "variedad": "Cabernet Franc",
+        "id": "9",
+        "precio": "1500",
+        "imgTitle":"FondDeCaveCabF"
+    }
+]
