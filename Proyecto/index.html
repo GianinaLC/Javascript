@@ -46,6 +46,61 @@
 		Gracias por su compra
 	</div>
 
+	<!-- -------parte oculta, relizacion del pago-------- -->
+	<div class="p-3 realizarCompra oculta bg-light mb-5">
+		<form class="p-3 bg-pago">
+			<span class="close">x</span>
+			<div class="row col-12 p-2">
+				<div class="mb-3 col-6 col-sm-6">
+					<p class="form-label">Envío</p>
+				</div>
+				<div class="btn-group mb-3 col-6 col-sm-4" role="group" aria-label="Basic radio toggle button group">
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+					<label class="btn btn-outline-secondary btn-sm" for="btnradio1">Si</label>
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" >
+					<label class="btn btn-outline-secondary btn-sm" for="btnradio2">No</label>
+				</div>
+				<div>
+					<p>
+						El envío es de $300 o gratis con la compra igual o mayor a 10mil.
+					</p>
+				</div>
+				<div class="mb-3 datosEnvio oculta col-12 ">
+					<label class="form-label">*Dirección</label>
+					<input class="form-control mb-3" id="direccion" required>
+					<label class="form-label">*Número</label>
+					<input class="form-control mb-3" id="numeroCasa" required>
+					<label class="form-label">*Localidad</label>
+					<input class="form-control mb-3" id="localidad" required>
+				</div>  
+				
+			</div>
+
+			<div class="row justify-content-center ">
+				<div class="mb-3 col-12 col-sm-6">
+					<label class="form-label text-uppercase">*Nombre:</label>
+					<input class="form-control mb-3" id="nombre" required>
+				</div>
+				<div class="mb-3 col-12 col-sm-6">
+					<label class="form-label text-uppercase">*Apellido:</label>
+					<input class="form-control mb-3" id="apellido" required>
+				</div>
+				<div class="mb-3 col-12 col-sm-6">
+					<label class="form-label text-uppercase">Total de la compra</label>
+				</div>
+				<div class="mb-3 col-12 col-sm-6">
+					<label class="shadow px-2 fs-4" id="totalCompra"> </label>
+				</div>
+				<div class="col-4">
+					<button type="submit" class="btn btn-dark " id="vaciarCarro">Finalizar compra</button>
+				</div>
+				<div class="col-12 mb-5 text-center">
+					<p class="fs-6 p-3">Los campos que tienen * son obligatorios</p>
+				</div>
+			</div>
+		</form>
+	</div>
+
     <div class="tab-content " id="pills-tabContent">
       	<div class="tab-pane fade show active container" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
         	<div class='row cards g-3 p-5'>
@@ -53,8 +108,8 @@
 			</div>
       	</div>
 
-		<div class="tab-pane fade opacidad carrito carritoMenu" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-			<table class="table table-secondary table-hover table-responsive my-5" >
+		<div class="tab-pane fade opacidad carrito carritoMenu table-responsive" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+			<table class="table table-secondary table-hover my-5" >
 				<thead>
 					<tr class="">
 						<th scope="col">#</th>
@@ -81,54 +136,7 @@
       	</div>
     </div>
 
-	<!-- -------parte oculta, relizacion del pago-------- -->
-	<div class="p-5 realizarCompra oculta bg-light mb-5">
-		<form class="p-3 justify-content-center bg-pago ">
-			<span class="close">x</span>
-			<div class="row col-12 p-2">
-				<div class="mb-3 col-6 col-sm-6">
-					<p class="form-label">Envío</p>
-				</div>
-				<div class="btn-group mb-3 col-6 col-sm-4" role="group" aria-label="Basic radio toggle button group">
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-					<label class="btn btn-outline-secondary btn-sm" for="btnradio1">Si</label>
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked>
-					<label class="btn btn-outline-secondary btn-sm" for="btnradio2">No</label>
-				</div>
-				<div>
-					<p>
-						El envío es de $300 o gratis con la compra igual o mayor a 10mil.
-					</p>
-				</div>
-				<div class="mb-3 datosEnvio oculta col-12 ">
-					<label class="form-label">Dirección</label>
-					<input class="form-control mb-3" id="direccion" required>
-					<label class="form-label">Número</label>
-					<input class="form-control mb-3" id="numeroCasa" required>
-					<label class="form-label">Localidad</label>
-					<input class="form-control mb-3" id="localidad" required>
-				</div>  
-				
-			</div>
-
-			<div class="row justify-content-center ">
-				<div class="mb-3 col-12 col-sm-6">
-					<label  class="form-label text-uppercase">Total de la compra</label>
-				</div>
-				<div class="mb-3 col-12 col-sm-6">
-					<label class="shadow px-2 fs-4" id="totalCompra"> </label>
-				</div>
-				<div class="col-4 ">
-					<button type="submit" class="btn btn-dark " id="vaciarCarro">Finalizar compra</button>
-				</div>
-			</div>
-		</form>
-	</div>
-	
-	
 </main>
-
-	
 	
 
     <!----------------------- FOOTER ------------------>
@@ -185,4 +193,7 @@
     <script src="./js/script.js"></script>
   </body>
 </html>
+
+
+
 

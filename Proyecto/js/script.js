@@ -44,13 +44,12 @@ $(() => {
 	}));
 })
 
-const tbody = document.querySelector('.tbody')
-
-let carrito = []
+const tbody = document.querySelector('.tbody');
+let carrito = [];
 
 function addToCarritoItem(e){
 	const button = e.target
-	const item = button.closest('.card')
+	const item = button.closest('.card');
 	const itemTitle = item.querySelector('.card-title').textContent;
 	const itemPrice = item.querySelector('.precio').textContent;
 	const itemVariedad = item.querySelector('.variedad').textContent;
@@ -67,7 +66,7 @@ function addToCarritoItem(e){
 
 //trim() devuelve la cadena de texto despojada de los espacios en blanco en ambos extremos
 function addItemCarrito(newItem){
-	const inputElemento = tbody.getElementsByClassName('input-elemento')
+	const inputElemento = tbody.getElementsByClassName('input-elemento');
 	for(let i =0; i < carrito.length ; i++){
 		if(carrito[i].title.trim() === newItem.title.trim()){
 		carrito[i].cantidad ++;
@@ -79,7 +78,6 @@ function addItemCarrito(newItem){
 	}
 	
 	carrito.push(newItem)
-	
 	renderCarrito()
 } 
 
@@ -88,7 +86,7 @@ function renderCarrito(){
   	carrito.map(item => {
     const tr = document.createElement('tr')
     tr.classList.add('ItemCarrito')
-    const Content = `
+    const content = `
 						<th scope="row"></th>
 								<td class="tabla-productos">
 								<img src=${item.img}  alt="${item.title}">
@@ -101,7 +99,7 @@ function renderCarrito(){
 								</td>
 						
 					`
-    tr.innerHTML = Content;
+    tr.innerHTML = content;
     tbody.append(tr)
 
     tr.querySelector(".delete").addEventListener('click', removeItemCarrito)
@@ -112,23 +110,23 @@ function renderCarrito(){
 }
 
 let Total;
-const itemCartTotal = document.querySelector('.itemCartTotal')
+const itemCartTotal = document.querySelector('.itemCartTotal');
 
 function carritoTotal(){
 	Total = 0;
   	carrito.forEach((item) => {
-    const precio = Number(item.precio.replace("$", ''))
-    Total = Total + precio*item.cantidad
+    const precio = Number(item.precio.replace("$", ''));
+    Total = Total + precio * item.cantidad
   })
 
-  itemCartTotal.innerHTML = `Subtotal $${Total}`
+  itemCartTotal.innerHTML = `Subtotal $${Total}`;
   addLocalStorage()
 }
 
 //splice() cambia el contenido de un array eliminando elementos existentes y/o agregando nuevos elementos.
 function removeItemCarrito(e){
   	const buttonDelete = e.target
-  	const tr = buttonDelete.closest(".ItemCarrito")
+  	const tr = buttonDelete.closest(".ItemCarrito");
   	const title = tr.querySelector('.title').textContent;
   	for(let i=0; i<carrito.length ; i++){
 
@@ -144,7 +142,7 @@ function removeItemCarrito(e){
 //closest devuelve el ascendiente más cercano al elemento actual (o el propio elemento actual) que coincida con el selector proporcionado por parámetro.
 function sumaCantidad(e){
 	const sumaInput  = e.target
-	const tr = sumaInput.closest(".ItemCarrito")
+	const tr = sumaInput.closest(".ItemCarrito");
 	const title = tr.querySelector('.title').textContent;
 	carrito.forEach(item => {
     if(item.title.trim() === title){
@@ -160,15 +158,22 @@ function addLocalStorage(){
 }
 
 //cerrar ventana compra
-let close = document.querySelector('.close');
+let closePago = document.querySelector('.close');
 
-close.addEventListener('click', ()=>{
+closePago.addEventListener('click', ()=>{
 	realizarCompra.classList.add('oculta');
-	opacidad.classList.remove('opacity')
+	opacidad.classList.remove('opacity');
+	document.getElementById("btnradio1").checked = false;
+	document.getElementById("btnradio2").checked = false;
+	//en caso de querer modificar la comprar, al cerrar la ventana de pago, se reinicia el check de los botones
+	//de esa manera, funciona el agregado del envio al hacer click en si.
+	//sin esto, antes si hacia todo esos pasos, al volver a comprar me quedaba seleccionado el SI y no me sumaba el envio
 })
+
 
 ///////////direcion para el envio del pedido
 let direccionIngresada;
+let direcciones = [];
 
 function guardarDireccion() {
     class Direccion {
@@ -184,18 +189,59 @@ function guardarDireccion() {
     let localidad = document.getElementById('localidad').value;
 
     direccionIngresada = (new Direccion(direccion,numeroCasa,localidad));
+	direcciones.push(direccionIngresada);
 }
 
+let cliente;
+function usuario(){
+	cliente= {
+		nombre: document.getElementById('nombre').value,
+		apellido: document.getElementById('apellido').value
+	}
+}
 
 //realizarCompra
 let realizarCompra = document.querySelector('.realizarCompra');
-let opacidad = document.querySelector('.opacidad')
+let opacidad = document.querySelector('.opacidad');
 let btnComprar = document.getElementById('btnComprar');
 
 btnComprar.addEventListener('click', (e)=>{
     e.preventDefault();
     mostrar();
 })
+
+
+let btnCheckEnvio1 = document.getElementById('btnradio1');
+let btnCheckEnvio2 = document.getElementById('btnradio2');
+
+function mostrar(){
+    realizarCompra.classList.remove('oculta');
+    opacidad.classList.add('opacity');
+    let totalCompra = document.getElementById('totalCompra');
+    let envio = 300;
+    let costoFinal;
+    let datosEnvios = document.querySelector('.datosEnvio');
+	totalCompra.textContent = `$${Total}`
+
+//btnradio2=no
+    btnCheckEnvio2.addEventListener('click',()=>{
+        datosEnvios.classList.add('oculta');
+		totalCompra.textContent = `$${Total}`
+})
+
+//btnradio1=si
+    btnCheckEnvio1.addEventListener('click',()=>{
+    datosEnvios.classList.remove('oculta');
+	if(Total >= 10000){
+		envio=0;
+		costoFinal = Total + envio;
+	}else{
+		costoFinal = Total + envio;
+	}
+	totalCompra.textContent =`$${costoFinal}`
+    })
+};
+
 
 function validarInput() {
     if (document.getElementById('direccion').value == null || document.getElementById('direccion').value == ''){
@@ -208,68 +254,48 @@ function validarInput() {
 	}else if(document.getElementById('localidad').value == null || document.getElementById('localidad').value == ''){
         document.getElementById('localidad').focus();
 		return false;
-	}else{
-		guardarDireccion();
+	}else if(validarUsuario()){
 		finalizarCompra();
 	}
 }
 
-let btnCheckEnvio1 = document.getElementById('btnradio1');
-    let btnCheckEnvio2 = document.getElementById('btnradio2');
-function mostrar(){
-    realizarCompra.classList.remove('oculta');
-    opacidad.classList.add('opacity')
-    
-    let totalCompra = document.getElementById('totalCompra');
-    let envio = 300;
-    let costoFinal;
-    let datosEnvios = document.querySelector('.datosEnvio');
-
-	totalCompra.textContent = `$${Total}`
-
-//btnradio2=no
-    btnCheckEnvio2.addEventListener('click',()=>{
-        datosEnvios.classList.add('oculta');
-		totalCompra.textContent = `$${Total}`
-})
-
-//btnradio1=si
-    btnCheckEnvio1.addEventListener('click',()=>{
-    datosEnvios.classList.remove('oculta');
-        if(Total >= 10000){
-            envio=0;
-            costoFinal = Total + envio;
-        }else{
-            costoFinal = Total + envio;
-        }
-        totalCompra.textContent =`$${costoFinal}`
-		
-    })
-};
+//pedir nombre ya sea para el envio o retirar en el lugar
+function validarUsuario(){
+	if (document.getElementById('nombre').value == null || document.getElementById('nombre').value == ''){
+        document.getElementById('nombre').focus();
+		return false;
+	}else if (document.getElementById('apellido').value == null || document.getElementById('apellido').value == ''){
+		document.getElementById('apellido').focus();
+		return false;
+	}else{
+		finalizarCompra();
+	}	
+}
 
 
-//Forma explicita jquery
+//Forma explicita jquery -finalizarcompra
 $(document).ready(function() {
 	$('#vaciarCarro').click((e)=>{
 		e.preventDefault();
 		if(btnCheckEnvio1.checked){
 			validarInput();
+			guardarDireccion();
+			
 		}else if(btnCheckEnvio2.checked){
-			finalizarCompra()
+			validarUsuario();
 		}
-		
 	})
 })
 	
 function finalizarCompra(){
-		/* guardarDireccion(); */
-		vaciarCarro()
-		divDespedida()
+	usuario();
+	vaciarCarro();
+	divDespedida();
 }
 
 //gracias por la compra
 function divDespedida(){
-	const alert = document.querySelector('.alert')
+	const alert = document.querySelector('.alert');
 
 	setTimeout( function(){
 		alert.classList.add('hide')
@@ -277,27 +303,23 @@ function divDespedida(){
 		alert.classList.remove('hide')
 
 	realizarCompra.classList.add('oculta');
-    opacidad.classList.remove('opacity')
-
+    opacidad.classList.remove('opacity');
 }
 
 function vaciarCarro(){
 	tbody.innerHTML = '';
-	itemCartTotal.innerHTML = 'Subtotal: 0'
+	itemCartTotal.innerHTML = 'Subtotal: 0';
 	localStorage.removeItem('carrito');
 	carrito = [];
 	carritoTotal();
+	document.getElementById("btnradio1").checked = false;//mismo motivo al del exit en la compra. Para resetear el checked
+	document.getElementById("btnradio2").checked = false;//y asi sumar o no el envio
 }
 
 window.onload = function(){
 	const storage = JSON.parse(localStorage.getItem('carrito'));
 	if(storage){
 	  	carrito = storage;
-	  	renderCarrito()
+	  	renderCarrito();
 	}
-  }
-  
-
-
-  //salir de la ventana comprar-envio, para seguir agregando mas al carrito
-  
+}
