@@ -46,7 +46,7 @@ $(() => {
 
 const tbody = document.querySelector('.tbody');
 let table2 = document.querySelector('.table2');//oculta tabla carrito
-let carritoVacio = document.getElementById('carritoVacio');
+let carritoVacio = document.getElementById('carritoVacio');//imagen carritoVacio
 let carrito = [];
 
 function addToCarritoItem(e){
@@ -301,8 +301,7 @@ function finalizarCompra(){
 }
 
 //gracias por la compra
-function divDespedida(){/* 
-	const alert = document.querySelector('.alert'); */
+function divDespedida(){
 	let finGracias = document.getElementById('finGracias');
 
 	setTimeout( function(){
