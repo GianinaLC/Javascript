@@ -44,15 +44,22 @@
 	<!-- -------parte oculta, relizacion del pago-------- -->
 	<div class="p-3 realizarCompra oculta bg-light mb-5">
 		<form class="p-3 bg-pago">
-			<span class="close">x</span>
+			<div class="col-12 row">
+				<div class="col-10 m-0 text-muted text-center">
+					<p class="fs-6 p-3">Los campos que tienen * son obligatorios</p>
+				</div>
+				<div class="col-2 ">
+					<span class="close">x</span>
+				</div>
+			</div>
 			<div class="row col-12 p-2">
 				<div class="mb-3 col-6 col-sm-6">
-					<p class="form-label">Envío</p>
+					<p class="form-label">*Envío</p>
 				</div>
 				<div class="btn-group mb-3 col-6 col-sm-4" role="group" aria-label="Basic radio toggle button group">
 					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
 					<label class="btn btn-outline-secondary btn-sm" for="btnradio1">Si</label>
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" >
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked >
 					<label class="btn btn-outline-secondary btn-sm" for="btnradio2">No</label>
 				</div>
 				<div>
@@ -85,11 +92,42 @@
 				<div class="mb-3 col-12 col-sm-6">
 					<label class="shadow px-2 fs-4" id="totalCompra"> </label>
 				</div>
+
+				<!-- opcion cuotas -->
+				<div class="form-check mb-3 col-12 col-sm-6">
+					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+					<label class="form-check-label" for="flexRadioDefault1" id="cuota">
+					  Cuotas
+					</label>
+					<div id="cuotas" class="oculta">
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onclick="test()">
+							<label class="form-check-label" for="inlineRadio1">3 Sin interés</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" onclick="test()">
+							<label class="form-check-label" for="inlineRadio2">6 Sin interés</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" onclick="test()">
+							<label class="form-check-label" for="inlineRadio3">12 + interés</label>
+						</div>
+						<div class="mb-3 col-12">
+							<label class="form-label text-uppercase">Minicuotas de: </label>
+							<label class="shadow px-2 fs-4" id="cuotasDe"> </label>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-check mb-3 col-12 col-sm-6">
+					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+					<label class="form-check-label" for="flexRadioDefault2">
+					  	Efectivo
+					</label>
+				</div>
+	
 				<div class="col-4">
 					<button type="submit" class="btn btn-dark " id="vaciarCarro">Finalizar compra</button>
-				</div>
-				<div class="col-12 mb-5 text-center">
-					<p class="fs-6 p-3">Los campos que tienen * son obligatorios</p>
 				</div>
 			</div>
 		</form>

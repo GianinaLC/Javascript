@@ -167,14 +167,25 @@ let closePago = document.querySelector('.close');
 closePago.addEventListener('click', ()=>{
 	realizarCompra.classList.add('oculta');
 	opacidad.classList.remove('opacity');
-	document.getElementById("btnradio1").checked = false;
-	document.getElementById("btnradio2").checked = false;
+	reinicioRadiobtn();
 	//en caso de querer modificar la comprar, al cerrar la ventana de pago, se reinicia el check de los botones
 	//de esa manera, funciona el agregado del envio al hacer click en si.
 	//sin esto, antes si hacia todo esos pasos, al volver a comprar me quedaba seleccionado el SI y no me sumaba el envio
 })
 
+function reinicioRadiobtn(){
+	document.getElementById("btnradio1").checked = false;//si no
+	document.getElementById("btnradio2").checked = false;
+	document.getElementById("inlineRadio1").checked = false;//cuotas 3 6 12
+	document.getElementById("inlineRadio2").checked = false;
+	document.getElementById("inlineRadio3").checked = false;
+	document.getElementById("flexRadioDefault1").checked = false;//modopago
+	document.getElementById("flexRadioDefault2").checked = true;
+	$(() => {
+		$("#cuotas").hide();//oculta las opciones de cuotas
+	})
 
+}
 //direcion para el envio del pedido
 let direccionIngresada;
 let direcciones = [];
@@ -209,46 +220,100 @@ let realizarCompra = document.querySelector('.realizarCompra');
 let opacidad = document.querySelector('.opacidad');
 let btnComprar = document.getElementById('btnComprar');
 
-
 btnComprar.addEventListener('click', (e)=>{
 	e.preventDefault();
 	mostrar(); 
 })
 
+let btnCheckEnvio1 = document.getElementById('btnradio1');//si
+let btnCheckEnvio2 = document.getElementById('btnradio2');//no
+let cuotas = document.getElementById("cuotas");
 
-
-let btnCheckEnvio1 = document.getElementById('btnradio1');
-let btnCheckEnvio2 = document.getElementById('btnradio2');
-
+//si no selecciono si quiero o no envio, al hacerlo cambia el valor del total
+let costoFinal;
 function mostrar(){
     realizarCompra.classList.remove('oculta');
     opacidad.classList.add('opacity');
     let totalCompra = document.getElementById('totalCompra');
     let envio = 300;
-    let costoFinal;
     let datosEnvios = document.querySelector('.datosEnvio');
 	totalCompra.textContent = `$${Total}`
+
+	$(() => {
+	//cuotas botones cuotas
+	//cuota btnradio cuota
+	$("#flexRadioDefault1").click(function() {
+		$("#cuotas").show( "slow", "linear" );
+	  })
+
+	$("#flexRadioDefault2").click(function() {
+		$("#cuotas").hide();
+	  })
+	})
 
 //btnradio2=no
     btnCheckEnvio2.addEventListener('click',()=>{
         datosEnvios.classList.add('oculta');
 		totalCompra.textContent = `$${Total}`
+		test()
 })
 
+//coloco test() en cada opcion para que corra con el correspondiente total
 //btnradio1=si
     btnCheckEnvio1.addEventListener('click',()=>{
-    datosEnvios.classList.remove('oculta');
-	if(Total >= 10000){
-		envio=0;
-		costoFinal = Total + envio;
-	}else{
-		costoFinal = Total + envio;
-	}
+    	datosEnvios.classList.remove('oculta');
+		if(Total >= 10000){
+			envio=0;
+			costoFinal = Total + envio;
+		}else{
+			costoFinal = Total + envio;
+		}
+	
 	totalCompra.textContent =`$${costoFinal}`
+	test()
     })
-};
+}
 
+//si no selecciono si quiero o no envio, al hacerlo cambia el valor del total
+function test() {
+	let cuotasDe = document.getElementById('cuotasDe');
+	let miniCuotas = '';
+	let interes = 0.10;
+	let miniCuotasInteres;
+	if (btnCheckEnvio2.checked){
+		if (document.getElementById('inlineRadio1').checked == true) {
+			miniCuotas = (Total / 3).toFixed(2);
+			return cuotasDe.textContent =`$ ${miniCuotas}`;
+		}
+		if (document.getElementById('inlineRadio2').checked == true) {
+			miniCuotas = (Total / 6).toFixed(2);
+			return cuotasDe.textContent =`$ ${miniCuotas}`;
+		}
+		if (document.getElementById('inlineRadio3').checked == true) {
+			miniCuotas = (Total / 12);
+			miniCuotasInteres = (miniCuotas + (miniCuotas* interes)).toFixed(2);
+			return cuotasDe.textContent =`$ ${miniCuotasInteres}`;
+		}
+	}
 
+	if(btnCheckEnvio1.checked){
+		if (document.getElementById('inlineRadio1').checked == true) {
+			miniCuotas = (costoFinal / 3).toFixed(2);
+			return cuotasDe.textContent =`$ ${miniCuotas}`;
+		}
+		if (document.getElementById('inlineRadio2').checked == true) {
+			miniCuotas = (costoFinal / 6).toFixed(2);
+			return cuotasDe.textContent =`$ ${miniCuotas}`;
+		}
+		if (document.getElementById('inlineRadio3').checked == true) {
+			miniCuotas = (costoFinal / 12);
+			miniCuotasInteres = (miniCuotas + (miniCuotas* interes)).toFixed(2);
+			return cuotasDe.textContent =`$ ${miniCuotasInteres}`;
+		}
+	}
+}
+
+//al estar en localStorage, luego de realizar compra si vuelvo a comprar quedan los nombres ingresados anteriormente.(siendo el mismo usuario, no hay problema en este caso)
 function validarInput() {
     if (document.getElementById('direccion').value == null || document.getElementById('direccion').value == ''){
         document.getElementById('direccion').focus();
@@ -278,7 +343,6 @@ function validarUsuario(){
 	}	
 }
 
-
 //Forma explicita jquery -finalizarcompra
 $(document).ready(function() {
 	$('#vaciarCarro').click((e)=>{
@@ -290,7 +354,6 @@ $(document).ready(function() {
 		}else if(btnCheckEnvio2.checked){
 			validarUsuario();
 		}
-		
 	})
 })
 	
@@ -300,7 +363,7 @@ function finalizarCompra(){
 	divDespedida();
 }
 
-//gracias por la compra
+//gracias por la compra - imagen
 function divDespedida(){
 	let finGracias = document.getElementById('finGracias');
 
@@ -320,8 +383,7 @@ function vaciarCarro(){
 	localStorage.removeItem('carrito');
 	carrito = [];
 	carritoTotal();
-	document.getElementById("btnradio1").checked = false;//mismo motivo al del exit en la compra. Para resetear el checked
-	document.getElementById("btnradio2").checked = false;//y asi sumar o no el envio
+	reinicioRadiobtn();
 }
 
 window.onload = function(){
