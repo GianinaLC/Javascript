@@ -39,7 +39,7 @@ display: none;
 display: block;
 }
 
-.hide, .remove{
+.hide{
   display: none;
 }
 

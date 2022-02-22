@@ -45,6 +45,8 @@ $(() => {
 })
 
 const tbody = document.querySelector('.tbody');
+let table2 = document.querySelector('.table2');//oculta tabla carrito
+let carritoVacio = document.getElementById('carritoVacio');
 let carrito = [];
 
 function addToCarritoItem(e){
@@ -61,6 +63,8 @@ function addToCarritoItem(e){
 		variedad: itemVariedad,
 		cantidad: 1
 	}
+	table2.classList.remove('hide')
+	carritoVacio.classList.add('hide')
 	addItemCarrito(newItem)
 }
 
@@ -76,7 +80,7 @@ function addItemCarrito(newItem){
 		return null;
 		}
 	}
-	
+
 	carrito.push(newItem)
 	renderCarrito()
 } 
@@ -205,10 +209,12 @@ let realizarCompra = document.querySelector('.realizarCompra');
 let opacidad = document.querySelector('.opacidad');
 let btnComprar = document.getElementById('btnComprar');
 
+
 btnComprar.addEventListener('click', (e)=>{
-    e.preventDefault();
-    mostrar();
+	e.preventDefault();
+	mostrar(); 
 })
+
 
 
 let btnCheckEnvio1 = document.getElementById('btnradio1');
@@ -284,6 +290,7 @@ $(document).ready(function() {
 		}else if(btnCheckEnvio2.checked){
 			validarUsuario();
 		}
+		
 	})
 })
 	
@@ -294,14 +301,15 @@ function finalizarCompra(){
 }
 
 //gracias por la compra
-function divDespedida(){
-	const alert = document.querySelector('.alert');
+function divDespedida(){/* 
+	const alert = document.querySelector('.alert'); */
+	let finGracias = document.getElementById('finGracias');
 
 	setTimeout( function(){
-		alert.classList.add('hide')
+		finGracias.classList.add('hide')
 	}, 2000)
-		alert.classList.remove('hide')
-
+		finGracias.classList.remove('hide')
+	
 	realizarCompra.classList.add('oculta');
     opacidad.classList.remove('opacity');
 }
@@ -309,6 +317,7 @@ function divDespedida(){
 function vaciarCarro(){
 	tbody.innerHTML = '';
 	itemCartTotal.innerHTML = 'Subtotal: 0';
+	table2.classList.add('hide')
 	localStorage.removeItem('carrito');
 	carrito = [];
 	carritoTotal();
