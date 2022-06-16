@@ -4,7 +4,7 @@ Proyecto del curso de CODERHOUSE de Javascript.
 [Link al proyecto](https://gianinalc.github.io/Javascript)
 
 
-##Construido con
+## Construido con
 
 HTML
 
@@ -14,4 +14,4 @@ BOOTSTRAP
 
 JAVASCRIPT
 
-JQUERY(se requería una parte para el proyecto)
+JQUERY (se requería una parte para el proyecto)
