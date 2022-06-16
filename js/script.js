@@ -63,8 +63,8 @@ function addToCarritoItem(e){
 		variedad: itemVariedad,
 		cantidad: 1
 	}
-	table2.classList.remove('hide')
-	carritoVacio.classList.add('hide')
+	table2.classList.remove('hidden')
+	carritoVacio.classList.add('hidden')
 	addItemCarrito(newItem)
 }
 
@@ -165,7 +165,7 @@ function addLocalStorage(){
 let closePago = document.querySelector('.close');
 
 closePago.addEventListener('click', ()=>{
-	realizarCompra.classList.add('oculta');
+	realizarCompra.classList.add('hidden');
 	opacidad.classList.remove('opacity');
 	reinicioRadiobtn();
 	//en caso de querer modificar la comprar, al cerrar la ventana de pago, se reinicia el check de los botones
@@ -232,7 +232,7 @@ let cuotas = document.getElementById("cuotas");
 //si no selecciono si quiero o no envio, al hacerlo cambia el valor del total
 let costoFinal;
 function mostrar(){
-    realizarCompra.classList.remove('oculta');
+    realizarCompra.classList.remove('hidden');
     opacidad.classList.add('opacity');
     let totalCompra = document.getElementById('totalCompra');
     let envio = 300;
@@ -253,7 +253,7 @@ function mostrar(){
 
 //btnradio2=no
     btnCheckEnvio2.addEventListener('click',()=>{
-        datosEnvios.classList.add('oculta');
+        datosEnvios.classList.add('hidden');
 		totalCompra.textContent = `$${Total}`
 		test()
 })
@@ -261,7 +261,7 @@ function mostrar(){
 //coloco test() en cada opcion para que corra con el correspondiente total
 //btnradio1=si
     btnCheckEnvio1.addEventListener('click',()=>{
-    	datosEnvios.classList.remove('oculta');
+    	datosEnvios.classList.remove('hidden');
 		if(Total >= 10000){
 			envio=0;
 			costoFinal = Total + envio;
@@ -368,18 +368,18 @@ function divDespedida(){
 	let finGracias = document.getElementById('finGracias');
 
 	setTimeout( function(){
-		finGracias.classList.add('hide')
+		finGracias.classList.add('hidden')
 	}, 2000)
-		finGracias.classList.remove('hide')
+		finGracias.classList.remove('hidden')
 	
-	realizarCompra.classList.add('oculta');
+	realizarCompra.classList.add('hidden');
     opacidad.classList.remove('opacity');
 }
 
 function vaciarCarro(){
 	tbody.innerHTML = '';
 	itemCartTotal.innerHTML = 'Subtotal: 0';
-	table2.classList.add('hide')
+	table2.classList.add('hidden')
 	localStorage.removeItem('carrito');
 	carrito = [];
 	carritoTotal();
